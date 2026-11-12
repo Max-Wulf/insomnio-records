@@ -1,0 +1,41 @@
+export const transmissions = {
+  midnight: {
+    code: "IR-07 / 03:17 AM",
+    variant: "midnight",
+    graphic: "clock",
+    lines: ["A las 3:17 surgen las mejores ideas."],
+    punchline: "Este sitio web es prueba de ello.",
+    label: "Insomnio Records // Departamento de malas decisiones",
+  },
+  frequency: {
+    code: "IR-03 / fuera de frecuencia",
+    variant: "frequency",
+    graphic: "antenna",
+    lines: ["Broadcasting from nowhere.", "Received everywhere."],
+    punchline: "If you can hear this, you're already lost.",
+    label: "Insomnio Radio // Signal active",
+  },
+  paranoia: {
+    code: "IR-01 / publicidad no solicitada",
+    variant: "observation",
+    graphic: "eye",
+    lines: ["No estás paranoico."],
+    punchline: "Pero tampoco sos tan interesante.",
+    label: "Insomnio Records // El Ojo",
+  },
+  observation: {
+    code: "IR-01 / el ojo",
+    variant: "observation",
+    graphic: "eye",
+    lines: ["¿Quién vigila a los vigilantes?"],
+    punchline: "Nosotros tampoco sabemos.",
+    label: "Insomnio Records // Departamento de observación",
+  },
+  institution: {
+    code: "IR / manifiesto",
+    variant: "institution",
+    lines: ["Nos tomamos en serio la música.", "A nosotros, no tanto."],
+    punchline: "Seguí sintonizado.",
+    label: "Insomnio Records // Cultura independiente",
+  },
+};

@@ -41,6 +41,8 @@ Las siguientes funciones están verificadas por inspección del código. Esto no
 | Validaciones del formulario | Campos requeridos, longitudes y coincidencia de correos; campos HTML de tipo `email` |
 | Órdenes | Código para crear un documento en `orders`, mostrar su ID y vaciar el carrito tras el éxito |
 | Interfaz | Hero con carrusel, placa nocturna, carrito pixel art, footer editorial y reglas responsive |
+| Transmisiones editoriales | Banners reutilizables IR-07, IR-03, IR-01 e institucional, construidos con HTML, CSS e iconografía SVG propia; remates entre corchetes |
+| Confirmación de pedido | Ruta independiente con ID real obtenido tras la transacción, resumen, total registrado y copia del código |
 | Estados de interfaz | Indicadores de carga, carrito vacío, producto no encontrado y confirmación de compra |
 
 ### Estado de las validaciones de stock
@@ -137,11 +139,24 @@ La aplicación es una SPA. `main.jsx` monta `App`, que integra `BrowserRouter`, 
 | `/item/:id` | `ItemDetailContainer` | Consulta del disco y productos relacionados |
 | `/cart` | `CartContainer` | Carrito o estado vacío |
 | `/checkout` | `Checkout` | Validación del formulario y creación de la orden |
+| `/apparel` | `ApparelCatalog` | Presentación de los siete diseños; venta todavía no habilitada |
+| `/apparel/:slug` | `ApparelDetail` | Diseño individual, frente/dorso y cierre editorial correspondiente |
+| `/order-confirmation/:orderId` | `OrderConfirmation` | Comprobante de la última compra confirmada en esta pestaña; no crea órdenes |
 | `*` | `Error` | Página para rutas no encontradas |
 
 Flujo de compra: `items` → catálogo/detalle → `CartContext` y `localStorage` → checkout → transacción sobre `products` y `orders` → confirmación con ID de orden. La diferencia de colecciones es una limitación pendiente de resolver y validar.
 
 La orden guarda `comprador`, `carrito`, `total` y `fecha` mediante `serverTimestamp()`. Las operaciones de Firestore se ejecutan desde el navegador con el SDK de Firebase; no hay un servidor propio ni verificación de precios del lado del servidor en este repositorio.
+
+### Transmisiones y fin de compra
+
+Los siete diseños de Apparel (IR-01 a IR-07) tienen páginas individuales enlazadas desde la colección. Incluyen Transmisión de Largo Alcance y 03:17. `src/data/apparel.js` centraliza códigos, slugs y asignación de cierres; `ProductEditorialFooter` muestra el cierre de cada diseño antes del footer general. Las vistas de producto encuadran las imágenes originales mediante SVG, sin modificar los archivos ni generar imágenes de prendas nuevas. La personalización de IR-06 se presenta como propuesta del diseño, sin un configurador de compra habilitado. No hay precios, talles ni stock ficticios: la venta de indumentaria sigue pendiente. El catálogo musical también incorpora su cierre editorial propio.
+
+Los textos se centralizan en `src/data/transmissions.js`; `TransmissionBanner.jsx` comparte presentación, variantes y remates. IR-07 separa el catálogo del contenido editorial, IR-03 introduce Fuera de Frecuencia, IR-01 precede a Apparel y la variante institucional aparece en footer y confirmación. Las imágenes completas de las remeras permanecen en Apparel, no se usan como fondos de banners.
+
+El checkout prepara una copia del resumen y espera el éxito de `runTransaction` antes de persistirla, navegar y vaciar el carrito. `src/service/orderReceipt.js` conserva únicamente ID, productos y total en `sessionStorage`, bajo `insomnio-last-receipt-v1`, sin datos del comprador. La navegación también entrega el resumen por `state` para tolerar almacenamiento bloqueado.
+
+Recargar la confirmación recupera el resumen de esa pestaña sin ejecutar otra compra. Solo se conserva la última compra; cerrar la pestaña o bloquear el almacenamiento limita su recuperación. Una URL sin comprobante local muestra un estado de recuperación fallida, no una compra exitosa. El resumen local no autentica la orden remota ni sustituye un historial de pedidos. El total mostrado coincide con el enviado a Firestore, pero sigue pendiente validar precios contra una fuente confiable.
 
 ## Próximas implementaciones
 
@@ -212,13 +227,20 @@ Esta etapa no contempla alojar directamente archivos musicales comerciales en el
 
 ## Testing
 
-No hay un script `test`, una suite automatizada ni dependencias de Selenium o Playwright declaradas. ESLint es análisis estático y no reemplaza las pruebas funcionales.
+No hay un script `test` ni dependencias de Selenium o Playwright declaradas. Hay siete pruebas automatizadas de la lógica del comprobante con el runner integrado de Node.js, sin dependencias adicionales:
+
+```bash
+node --test tests/orderReceipt.test.js
+```
+
+Cubren la espera del commit, errores de compra, copia independiente del carrito, recuperación del resumen, IDs distintos, datos corruptos y almacenamiento bloqueado. El commit remoto se simula: no son pruebas de integración con Firestore ni pruebas visuales del navegador. ESLint es análisis estático y no reemplaza las pruebas funcionales.
 
 | Verificación | Estado observado |
 | --- | --- |
 | Compilación | La última ejecución local de `npm run build` finalizó correctamente; Vite advirtió sobre chunks de más de 500 kB |
 | ESLint | La ejecución durante esta revisión reportó 10 errores: imports sin uso, actualizaciones síncronas de estado dentro de efectos y exportación de contexto junto a componentes |
 | Checkout contra Firestore | No verificado de extremo a extremo; requiere resolver o comprobar las colecciones e IDs |
+| Comprobantes | Siete pruebas unitarias aprobadas; los módulos nuevos y el checkout adaptado pasan ESLint |
 | Stock concurrente, reglas y sesiones | Sin pruebas verificadas; autenticación aún no implementada |
 
 Escenarios mínimos pendientes: persistencia y recuperación del carrito, límites de cantidades, stock cero, stock insuficiente, producto inexistente, correos distintos, fallo de red, permisos denegados y dos compras concurrentes sobre las últimas unidades. Verificar también que una transacción fallida no cree una orden ni descuente parcialmente el inventario.

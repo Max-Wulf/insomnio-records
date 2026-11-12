@@ -1,0 +1,14 @@
+body .order-confirmation { width: min(100% - 40px, 960px); margin: 48px auto 72px; padding: clamp(20px, 4vw, 48px); background: #080808; border: 1px solid #664770; }
+.order-confirmation h1 { font-size: clamp(2rem, 5vw, 4rem); text-transform: uppercase; margin: 24px 0; line-height: 1.05; }
+.order-confirmation-code { font: .9rem/1.7 Consolas, monospace; overflow-wrap: anywhere; padding: 20px 0; border-block: 1px solid #393039; }
+.order-confirmation .btn-purple { display: inline-block; padding: 12px 18px; }
+.order-copy-status { min-height: 44px; font-size: .85rem; color: #c9b1e8; padding-top: 12px; }
+.order-receipt { margin: 24px 0 40px; }
+.order-receipt h2 { font: 1rem Consolas, monospace; }
+.order-receipt ul { list-style: none; padding: 0; }
+.order-receipt li { display: flex; justify-content: space-between; gap: 20px; padding: 18px 0; border-bottom: 1px solid #333; }
+.order-receipt li > div { display: flex; flex-direction: column; gap: 6px; min-width: 0; overflow-wrap: anywhere; }
+.order-receipt li span { font-size: .85rem; color: #bdbdbd; }
+.order-receipt-total { display: flex; justify-content: space-between; gap: 16px; font-size: 1.2rem; }
+.order-farewell { margin: 32px 0 12px; font: .85rem/1.6 Consolas, monospace; text-transform: uppercase; }
+@media (max-width: 480px) { .order-receipt li { flex-direction: column; gap: 10px; } .order-receipt-total { flex-direction: column; } }

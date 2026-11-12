@@ -24,3 +24,131 @@
 .footer-bottom span:last-child {
   color: #666;
 }
+
+body .transmission-footer {
+  background: #000;
+}
+
+.footer-broadcast {
+  padding: 56px clamp(18px, 4vw, 64px) 32px;
+}
+
+.footer-station {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.footer-wordmark {
+  color: var(--paper, #f5f5f5);
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -.075em;
+  text-decoration: none;
+}
+
+.footer-on-air,
+.footer-side-label,
+.footer-links,
+body .transmission-footer .footer-bottom {
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: .8rem;
+}
+
+.footer-on-air {
+  color: var(--paper, #f5f5f5);
+  white-space: nowrap;
+}
+
+.footer-message {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+  margin: 40px 0 48px;
+}
+
+.footer-message p {
+  color: var(--paper, #f5f5f5);
+  font-size: clamp(1.5rem, 3vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -.04em;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.footer-message > .transmission-banner { flex: 1; width: 100%; }
+.footer-message > .footer-links { flex-shrink: 0; }
+
+@media (max-width: 991px) {
+  .footer-message { flex-direction: column; align-items: stretch; }
+}
+
+.footer-links a {
+  display: inline-block;
+  padding: 12px 0;
+  color: var(--paper, #f5f5f5);
+  text-decoration: none;
+  border-bottom: 1px solid #646464;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 28px;
+}
+
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 44px;
+  color: var(--paper, #f5f5f5);
+}
+
+.footer-social svg {
+  width: 24px;
+  height: 24px;
+}
+
+.footer-links a:hover,
+.footer-wordmark:hover {
+  color: var(--purple, #b5a0db);
+}
+
+.footer-side-label {
+  color: var(--muted, #ababab);
+}
+
+body .transmission-footer .footer-bottom {
+  margin: 0 clamp(18px, 4vw, 64px);
+  padding: 24px 0 32px;
+  border-top: 1px solid var(--line, #303030);
+  align-items: flex-start;
+}
+
+body .transmission-footer .footer-bottom > span {
+  color: var(--muted, #ababab);
+}
+
+.footer-signoff {
+  text-align: right;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .footer-broadcast { padding-top: 40px; }
+  .footer-station { flex-wrap: wrap; gap: 16px; }
+  .footer-message { flex-direction: column; align-items: flex-start; }
+  .footer-signoff { text-align: left; }
+}

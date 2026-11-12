@@ -1,0 +1,230 @@
+/* Identity preview: keep this experiment separate from the existing theme. */
+body {
+  --ink: #080808;
+  --panel: #151515;
+  --paper: #f5f5f5;
+  --muted: #ababab;
+  --acid: #f5f5f5;
+  --purple: #b5a0db;
+  --line: #303030;
+}
+
+body .navbar-insomnio {
+  background: var(--ink) !important;
+}
+
+body .navbar-brand:hover .insomnio-wordmark,
+body .navbar-brand:focus-visible .insomnio-wordmark {
+  color: var(--purple, #b5a0db);
+}
+
+body .insomnio-wordmark {
+  display: inline-block;
+  color: var(--paper, #f5f5f5);
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 900;
+  letter-spacing: -.075em;
+  line-height: 1.3;
+}
+
+body .broadcast-label,
+body .transmission-status {
+  display: block;
+  color: var(--acid, #bb95ff);
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: .75rem;
+  letter-spacing: .06em;
+  margin-bottom: 18px;
+}
+
+body .home-carousel .transmission-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(380px, 43vw, 610px);
+  padding: 64px 6% 80px;
+  background: #000;
+  color: var(--paper);
+}
+
+body .home-carousel .slide-transmission::after {
+  display: none;
+}
+
+body .transmission-status {
+  position: absolute;
+  top: 25px;
+  left: 5%;
+  color: var(--muted);
+  margin: 0;
+}
+
+body .transmission-message {
+  text-align: center;
+}
+
+body .transmission-message h2 {
+  font-size: clamp(2.3rem, 5.6vw, 5.2rem);
+  font-weight: 900;
+  letter-spacing: -.065em;
+  line-height: 1.02;
+  margin: 0;
+}
+
+body .transmission-message p {
+  color: var(--muted);
+  font-size: clamp(.9rem, 1.4vw, 1.1rem);
+  margin: 24px 0;
+}
+
+body .home-carousel .carousel-btn {
+  border-radius: 0;
+  text-transform: lowercase;
+}
+
+body .transmission-card .broadcast-label {
+  color: var(--paper);
+}
+
+body .home-carousel .transmission-card .carousel-btn {
+  background: var(--ink);
+  border-color: #646464;
+  color: var(--paper);
+}
+
+body .home-carousel .transmission-card .carousel-btn:hover {
+  background: var(--paper);
+  border-color: var(--paper);
+  color: var(--ink);
+}
+
+body .home-carousel .transmission-card .carousel-btn:focus-visible {
+  outline-color: var(--paper);
+}
+
+body .home-carousel .carousel-indicators [data-bs-target] {
+  background: var(--paper);
+  box-shadow: 0 0 0 1px var(--ink);
+}
+
+body .home-carousel .carousel-indicators .active {
+  background: var(--paper);
+}
+
+body .home-intro h1 {
+  color: var(--paper);
+}
+
+body .home-intro p {
+  color: var(--muted);
+}
+
+body .product-card .product-img,
+body .detail-img-box {
+  background: #202020;
+}
+
+body .product-card .btn {
+  border-color: #646464;
+}
+
+body .cart-navbar-btn {
+  border: 2px solid var(--acid);
+  border-radius: 0;
+  box-shadow: 3px 3px 0 #646464;
+  transition: transform .15s, box-shadow .15s;
+}
+
+body .cart-navbar-btn:hover {
+  background: var(--paper);
+  border-color: var(--paper);
+}
+
+body .cart-navbar-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+
+/* Match the pixel cart's hard shadow on primary actions, including link buttons. */
+body #root :is(.btn, .carousel-btn, .btn-purple, .btn-empty, .btn-checkout,
+  .checkout-btn, .checkout-home, .empty-btn, .drawer-cart-link, .drawer-continue) {
+  border-radius: 0;
+  box-shadow: 3px 3px 0 #646464;
+  transition: background-color .15s, color .15s, border-color .15s,
+    transform .15s, box-shadow .15s;
+}
+
+body #root :is(.btn, .carousel-btn, .btn-purple, .btn-empty, .btn-checkout,
+  .checkout-btn, .checkout-home, .empty-btn, .drawer-cart-link, .drawer-continue):is(:hover, :focus-visible):not(:disabled):not(.disabled) {
+  box-shadow: 3px 3px 0 var(--purple, #b5a0db);
+}
+
+body #root :is(.btn, .carousel-btn, .btn-purple, .btn-empty, .btn-checkout,
+  .checkout-btn, .checkout-home, .empty-btn, .drawer-cart-link, .drawer-continue):active:not(:disabled):not(.disabled) {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+
+body #root :is(.btn, .carousel-btn, .btn-purple, .btn-empty, .btn-checkout,
+  .checkout-btn, .checkout-home, .empty-btn, .drawer-cart-link, .drawer-continue):is(:disabled, .disabled) {
+  box-shadow: none;
+  transform: none;
+}
+
+body .cart-widget .pixel-cart {
+  display: block;
+  flex-shrink: 0;
+}
+
+body .cart-widget span {
+  border-radius: 0;
+  font-family: Consolas, 'Courier New', monospace;
+  font-weight: 700;
+  border: 2px solid var(--ink);
+  min-width: 22px;
+  width: auto;
+  height: 22px;
+  padding: 0 3px;
+}
+
+body .footer {
+  background: var(--ink);
+  border-top: 1px solid var(--line);
+}
+
+body .transmission-signature {
+  position: absolute;
+  bottom: 24px;
+  right: 5%;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: -.06em;
+}
+
+body .home-intro .broadcast-label {
+  margin-bottom: 12px;
+}
+
+body .footer-bottom > span:first-child {
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: .8rem;
+  color: var(--acid, #bb95ff);
+}
+
+@media (max-width: 767px) {
+  body .home-carousel .transmission-card {
+    height: auto;
+    min-height: calc((100vw - 34px) * .5625 + 300px);
+    padding: 80px 20px;
+  }
+
+  body .transmission-message h2 {
+    font-size: clamp(2rem, 7.5vw, 3.5rem);
+  }
+
+  body .transmission-status {
+    font-size: .65rem;
+  }
+}

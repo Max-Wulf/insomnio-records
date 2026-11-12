@@ -73,41 +73,78 @@
   transition: opacity 1.5s ease-in-out;
 }
 
-/* Frusciante */
-.slide-frusciante .carousel-caption{
+/* Keep copy in the free side of each photo, including global theme overrides. */
+body .home-carousel .carousel-item .carousel-caption {
+  left: 5%;
+  right: auto;
+  bottom: 64px;
+  width: 34%;
+  max-width: 460px;
+  padding: 0;
+  text-align: left;
+}
+
+body .home-carousel .slide-frusciante .carousel-caption,
+body .home-carousel .slide-cobain .carousel-caption {
   left: auto;
-  right: 7%;
-  bottom: 110px;
-  max-width: 420px;
+  right: 5%;
   text-align: right;
 }
 
-/* Hendrix */
-.slide-hendrix .carousel-caption{
-    left:6%;
-    bottom:140px;
-    max-width:450px;
+body .home-carousel .slide-hendrix .carousel-caption {
+  width: 29%;
 }
 
-/* Cobain */
-.slide-cobain .carousel-caption{
-  left: auto;
-  right: 7%;
-  bottom: 110px;
-  max-width: 420px;
-  text-align: right;
+body .home-carousel .carousel-caption h2 {
+  font-size: clamp(2rem, 3.8vw, 3.6rem);
+  line-height: 1.05;
+  letter-spacing: -.045em;
+  text-wrap: balance;
 }
 
-/* Homme */
-.slide-homme .carousel-caption{
-    left:4%;
-    bottom:100px;
-    max-width:500px;
+body .home-carousel .carousel-caption p {
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  margin: 18px 0 24px;
+  text-wrap: balance;
 }
 
-/* Thom Yorke */
-.slide-yorke .carousel-caption{
-    left:8%;
-    bottom:120px;
-    max-width:450px;
+body .home-carousel .carousel-img {
+  object-position: center 30%;
+}
+
+@media (max-width: 767px) {
+  /* Preserve the full photo and give copy its own space on narrow screens. */
+  body .home-carousel .carousel-img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-position: center;
+  }
+
+  body .home-carousel .carousel-item::after {
+    display: none;
+  }
+
+  body .home-carousel .carousel-item .carousel-caption {
+    position: static;
+    width: auto;
+    max-width: none;
+    min-height: 300px;
+    padding: 24px 24px 64px;
+    background: var(--ink, #111210);
+    text-align: left;
+  }
+
+  body .home-carousel .carousel-caption h2 {
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+  }
+
+  body .home-carousel .carousel-caption p {
+    font-size: 1rem;
+    margin: 16px 0 20px;
+  }
+
+  body .home-carousel .carousel-btn {
+    max-width: 100%;
+    padding: 13px 18px;
+  }
 }

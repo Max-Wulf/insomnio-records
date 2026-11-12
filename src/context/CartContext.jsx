@@ -1,51 +1,87 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
+
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
+
+  const [cart, setCart] = useState(() => {
+    try {
+      const savedCart = localStorage.getItem("insomnio-cart");
+
+      return savedCart ? JSON.parse(savedCart) : [];
+    } catch {
+      return [];
+    }
+  });
+
+    useEffect(() => {
+      localStorage.setItem("insomnio-cart",JSON.stringify(cart));
+    }, [cart]);
 
   const isInCart = (id) => {
     return cart.some((prod) => prod.id === id);
   };
 
   const addItem = (item, qty) => {
-    if (isInCart(item.id)) {
-      setCart(
-        cart.map((prod) =>
+    if (
+      !Number.isInteger(qty) ||
+      qty <= 0 ||
+      !Number.isInteger(item.stock) ||
+      item.stock < 0
+    ) {
+      return;
+    }
+
+    setCart((prevCart) => {
+      const existingProduct = prevCart.find(
+        (prod) => prod.id === item.id
+      );
+
+      const currentQty = existingProduct?.quantity ?? 0;
+
+      if (currentQty + qty > item.stock) {
+        console.warn("No hay suficiente stock disponible");
+        return prevCart;
+      }
+
+      if (existingProduct) {
+        return prevCart.map((prod) =>
           prod.id === item.id
             ? { ...prod, quantity: prod.quantity + qty }
             : prod
-        )
-      );
-    } else {
-      setCart([...cart, { ...item, quantity: qty }]);
-    }
+        );
+      }
+
+      return [...prevCart, { ...item, quantity: qty }];
+    });
   };
 
   const decreaseItem = (id) => {
-  setCart(
-    cart.flatMap((prod) => {
-      if (prod.id !== id) return prod;
+    setCart((prevCart) =>
+      prevCart.flatMap((prod) => {
+        if (prod.id !== id) return [prod];
 
-      if (prod.quantity === 1) {
-        return [];
-      }
+        if (prod.quantity <= 1) {
+          return [];
+        }
 
-      return {
-        ...prod,
-        quantity: prod.quantity - 1,
-      };
-    })
-  );
-};
+        return [{
+          ...prod,
+          quantity: prod.quantity - 1,
+        }];
+      })
+    );
+  };
 
   const clear = () => {
     setCart([]);
   };
 
   const removeItem = (id) => {
-    setCart(cart.filter((prod) => prod.id !== id));
+    setCart((prevCart) =>
+      prevCart.filter((prod) => prod.id !== id)
+    );
   };
 
   const total = () => {
@@ -72,7 +108,9 @@ export const CartProvider = ({ children }) => {
         total,
         totalImp,
         totalQty,
+        
       }}
+
     >
       {children}
     </CartContext.Provider>

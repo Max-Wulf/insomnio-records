@@ -1,0 +1,28 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&family=Press+Start+2P&display=swap');
+.ir-says { --ir-ink: #101010; width: 100%; max-width: 1200px; margin: 0 auto; padding: 48px clamp(16px, 5vw, 64px) 80px; color: #f5f5f5; }
+.ir-says-heading { margin-bottom: 32px; font: .75rem/1.8 Consolas, monospace; }
+.ir-says-heading > span { color: #bcbcbc; }
+.ir-says h1 { font-family: 'Press Start 2P', Consolas, monospace; font-size: clamp(1.6rem, 5.5vw, 4rem); line-height: 1.6; letter-spacing: -.05em; margin: 20px 0; }
+.ir-says h1 > span { color: var(--ir-screen); }
+.ir-says-console { border: 3px solid var(--ir-screen); background: var(--ir-ink); box-shadow: 8px 8px 0 var(--ir-detail); margin-right: 8px; }
+.ir-says-hud { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 24px; padding: 12px 16px; font: .75rem/1.8 Consolas, monospace; }
+.ir-says-console > .ir-says-hud { color: var(--ir-screen); }
+.ir-says-screen { background: var(--ir-screen); color: var(--ir-ink); padding: clamp(16px, 3vw, 32px); }
+.ir-says-screen > .ir-says-hud { border-bottom: 2px solid var(--ir-ink); padding: 0 0 12px; font-weight: 700; }
+.ir-says-message { display: grid; align-items: center; min-height: 380px; padding: 32px 0; overflow-wrap: anywhere; }
+.ir-says-reveal { animation: ir-says-arrive .35s steps(6, end) both; }
+.ir-says-main { font: 700 clamp(1.8rem, 4.3vw, 3.4rem)/1.12 'Pixelify Sans', Consolas, monospace; margin: 0 0 24px; max-width: 25ch; }
+.ir-says-sub { font: 600 clamp(1.2rem, 2.4vw, 1.65rem)/1.35 'Pixelify Sans', Consolas, monospace; margin: 0; max-width: 48ch; }
+.ir-says-controls { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.ir-says-controls > span { font: 2.4rem/.55 monospace; letter-spacing: .1em; }
+.ir-says-controls button { font: clamp(.75rem, 2vw, 1rem)/1.5 'Press Start 2P', Consolas, monospace; border: 3px solid var(--ir-ink); border-radius: 0; padding: 18px 20px; color: var(--ir-ink); background: var(--ir-detail); box-shadow: 5px 5px 0 var(--ir-ink); }
+.ir-says-controls button:hover { background: #f5f5f5; }
+.ir-says-controls button:active { transform: translate(5px, 5px); box-shadow: none; }
+.ir-says-controls button:focus-visible { outline: 3px solid var(--ir-ink); outline-offset: 5px; }
+.ir-says-bottom { padding: 14px 16px; color: var(--ir-screen); font: .75rem/1.8 Consolas, monospace; }
+.ir-says-signoff { margin-top: 48px; border-left: 4px solid #f5f5f5; padding-left: 20px; font: 600 clamp(1.1rem, 2.3vw, 1.5rem)/1.5 'Pixelify Sans', Consolas, monospace; }
+.ir-says-signoff p { margin: 0 0 12px; }
+.ir-says-signoff p:last-child { color: #bcbcbc; }
+@keyframes ir-says-arrive { from { clip-path: inset(0 0 100% 0); transform: translateY(4px); } to { clip-path: inset(0); transform: translateY(0); } }
+@media (max-width: 480px) { .ir-says-message { min-height: 450px; } .ir-says-hud, .ir-says-bottom { font-size: .65rem; } }
+@media (prefers-reduced-motion: reduce) { .ir-says-reveal { animation: none; } }

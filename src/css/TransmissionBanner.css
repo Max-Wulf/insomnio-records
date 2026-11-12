@@ -1,0 +1,79 @@
+.transmission-banner {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin: 40px 0;
+  padding: clamp(24px, 4vw, 56px);
+  background: #050505;
+  border: 1px solid #664770;
+  color: #f5f5f5;
+}
+.transmission-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .15;
+  background: repeating-linear-gradient(0deg, transparent 0 3px, #8a6c92 3px 4px);
+}
+.transmission-banner::after { content: ""; position: absolute; top: 12px; right: 12px; width: 24px; height: 24px; border-top: 2px solid #b5a0db; border-right: 2px solid #b5a0db; }
+.transmission-banner-copy { flex: 1; min-width: 0; }
+.transmission-banner-code, .transmission-banner-label, .transmission-punchline { font-family: Consolas, 'Courier New', monospace; text-transform: uppercase; overflow-wrap: anywhere; }
+.transmission-banner-code { display: block; color: #c9b1e8; font-size: .75rem; letter-spacing: .05em; }
+.transmission-banner .transmission-banner-headline { font-size: clamp(1.5rem, 3.4vw, 3.2rem); font-weight: 900; letter-spacing: -.045em; line-height: 1.08; margin: 22px 0; text-transform: uppercase; }
+.transmission-banner-headline span { display: block; }
+.transmission-banner .transmission-punchline { color: #ded1ec; font-size: clamp(.8rem, 1.4vw, 1rem); margin: 0 0 24px; line-height: 1.6; }
+.transmission-banner-label { color: #aaa; font-size: .65rem; letter-spacing: .06em; display: block; }
+.transmission-clock { display: block; font: 900 clamp(4.5rem, 12vw, 10rem)/1 Consolas, monospace; letter-spacing: -.08em; color: #f5f5f5; margin-top: 24px; font-variant-numeric: tabular-nums; }
+.transmission-clock small { font-size: .18em; letter-spacing: 0; color: #b5a0db; }
+.transmission-banner--midnight { padding-bottom: 84px; }
+.transmission-corner-signature { position: absolute; right: clamp(20px, 3vw, 40px); bottom: 20px; color: #f5f5f5; font-size: 1.2rem; font-weight: 900; letter-spacing: -.075em; }
+.transmission-symbol { width: clamp(100px, 17vw, 200px); flex-shrink: 0; color: #b5a0db; }
+.transmission-banner--frequency { background: #291b32; }
+.transmission-banner--institution { border-left: 4px solid #b5a0db; }
+.transmission-banner--arcade {
+  background: #f4e64d;
+  color: #111;
+  border: 3px solid #111;
+  box-shadow: 6px 6px 0 #b5a0db;
+  margin-right: 6px;
+}
+.transmission-banner--arcade::before {
+  opacity: .08;
+  background: repeating-linear-gradient(0deg, transparent 0 3px, #111 3px 4px);
+}
+.transmission-banner--arcade::after {
+  border: 0;
+  background: #111;
+  width: 8px;
+  height: 8px;
+  top: 14px;
+  right: 22px;
+  box-shadow: 8px 8px 0 #111, -8px 8px 0 #111, 0 16px 0 #111;
+}
+.transmission-banner--arcade .transmission-banner-code {
+  display: inline-block;
+  max-width: calc(100% - 30px);
+  padding: 5px 8px;
+  color: #f4e64d;
+  background: #111;
+}
+.transmission-banner--arcade .transmission-banner-headline { color: #111; }
+.transmission-banner--arcade .transmission-punchline {
+  display: inline-block;
+  padding: 10px 12px;
+  border: 2px solid #111;
+  color: #111;
+  font-weight: 700;
+}
+.transmission-banner--arcade .transmission-banner-label { color: #343014; }
+.transmission-banner--compact { padding: clamp(20px, 3vw, 36px); margin: 0; }
+.transmission-banner--compact .transmission-banner-headline { font-size: clamp(1.25rem, 2.5vw, 2.2rem); }
+@media (max-width: 600px) {
+  .transmission-banner { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .transmission-symbol { width: 96px; align-self: flex-end; }
+}

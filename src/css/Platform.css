@@ -1,0 +1,97 @@
+/* Platform preview: styles are scoped so the existing purchase flow is preserved. */
+body .item-list-container .music-sector {
+  --panel: #291c32;
+  --line: #785980;
+  --acid: #f5f5f5;
+  background: #42294e;
+  border: 1px solid #785980;
+  margin-top: 32px;
+  padding: clamp(20px, 3vw, 44px);
+}
+
+body .music-sector .home-intro {
+  padding: 0 0 28px;
+  border-color: #785980;
+}
+
+body .music-sector .home-intro p { color: #dfd2e5; }
+body .music-sector .product-card { border-color: #785980; }
+body .music-sector .product-card .product-img { background: #201625; }
+body .music-sector .product-card .btn { border-color: #a88faf; }
+body .music-sector > div {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+  gap: 32px 24px !important;
+  padding: 32px 0 0 !important;
+}
+
+.signal-code {
+  display: block;
+  font: .75rem/1.5 Consolas, 'Courier New', monospace;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.editorial-interruption {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin: 36px 0;
+  padding: clamp(20px, 3vw, 36px);
+  border: 1px solid #82518d;
+  background: #603869;
+  color: #fff;
+}
+
+.editorial-interruption p {
+  position: relative;
+  z-index: 1;
+  max-width: 1050px;
+  margin: 12px 0 0;
+  font-size: clamp(1.5rem, 3.2vw, 3rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -.035em;
+  text-transform: uppercase;
+}
+
+.editorial-interruption--paper { background: #ededdf; color: #111; border-color: #ededdf; }
+.interruption-mark { position: absolute; right: 16px; bottom: -18px; font-size: 8rem; font-weight: 900; opacity: .08; letter-spacing: -.1em; }
+
+.signal-sector { background: #1c1421; padding: clamp(24px, 4vw, 56px); border: 1px solid #49334f; }
+.signal-sector .signal-code { color: #c5a1d0; }
+.signal-artwork-banner { display: block; width: 100%; height: auto; margin: 20px 0; }
+.apparel-catalog { padding: 32px clamp(16px, 4vw, 64px) 64px; }
+.apparel-back { color: #b5a0db; font: .85rem Consolas, monospace; text-decoration: none; }
+.apparel-back:hover { color: #fff; }
+.apparel-catalog-title { font-size: clamp(2.5rem, 6vw, 5rem); margin: 32px 0 0; text-transform: uppercase; }
+body .apparel-more { display: inline-block; padding: 16px 24px; margin: 8px 0 12px; text-decoration: none; }
+.signal-heading h2, .frequency-block h2, .apparel-heading h2 { font-size: clamp(2rem, 4vw, 4rem); line-height: 1.05; margin: 16px 0; }
+.signal-sector p, .apparel-heading p { color: #c5bec8; max-width: 650px; line-height: 1.6; }
+.signal-editorial-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 32px 0; }
+.signal-editorial-grid h3 { font-size: 1.25rem; margin: 12px 0; }
+.frequency-block { border-top: 1px solid #63456d; padding-top: 36px; scroll-margin-top: 24px; }
+.frequency-stamp { display: inline-block; margin-top: 16px; padding: 8px 12px; background: #b5a0db; color: #111; font: .75rem Consolas, monospace; }
+#senal-nocturna, #apparel, #catalogo { scroll-margin-top: 24px; }
+
+.apparel-sector { padding: 32px 0; }
+.apparel-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 32px; }
+.apparel-heading .signal-code { color: #b5a0db; }
+.collection-stamp { flex-shrink: 0; text-align: right; font: 1rem/1.8 Consolas, monospace; }
+.collection-stamp span { font-size: .7rem; color: #b5a0db; }
+.apparel-artwork { margin: 0 0 24px; border: 1px solid #4f3c54; background: #000; }
+.apparel-artwork img { display: block; width: 100%; height: auto; }
+.apparel-artwork figcaption { padding: 12px 16px; color: #bcb1bf; font: .7rem/1.5 Consolas, monospace; }
+.apparel-designs { list-style: none; padding: 0; margin: 32px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); }
+.apparel-designs li { padding: 24px 18px; border-top: 1px solid #63456d; }
+.apparel-designs .signal-code { color: #b5a0db; }
+.apparel-designs h3 { font-size: 1.1rem; margin: 14px 0 10px; }
+.apparel-designs p { font-size: .85rem; color: #ababab; margin: 0; }
+.apparel-release-note { margin: 24px 0 0; font: .75rem/1.5 Consolas, monospace; color: #b5a0db; }
+
+@media (max-width: 767px) {
+  .signal-editorial-grid { grid-template-columns: 1fr; gap: 24px; }
+  .apparel-heading { flex-direction: column; align-items: flex-start; }
+  .collection-stamp { text-align: left; }
+  .editorial-interruption { margin: 24px 0; }
+}

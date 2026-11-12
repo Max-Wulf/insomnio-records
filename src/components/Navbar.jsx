@@ -5,7 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { NavLink } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
-import insomnio from "../img/insomnio.png";
+import "../css/InsomnioIdentity.css";
 import CartDrawer from "./CartDrawer";
 import CartWidget from "./CartWidget";
 import "../css/Navbar.css";
@@ -18,7 +18,7 @@ function NavbarRB() {
       <Navbar expand="lg" className="navbar-insomnio">
         <Container fluid>
           <Navbar.Brand as={NavLink} to="/">
-            <img src={insomnio} alt="logo" className="logo" />
+            <span className="insomnio-wordmark" aria-label="Insomnio, inicio">[insomnio]</span>
           </Navbar.Brand>
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -38,6 +38,9 @@ function NavbarRB() {
                   Grandes Exitos
                 </NavDropdown.Item>
               </NavDropdown>
+              <Nav.Link href="/#senal-nocturna">Señal nocturna</Nav.Link>
+              <Nav.Link href="/#apparel">Apparel</Nav.Link>
+              <Nav.Link as={NavLink} to="/ir-says">IR SAYS</Nav.Link>
             </Nav>
 
             <div className="search-box">
@@ -47,6 +50,7 @@ function NavbarRB() {
 
             <button
               className="cart-navbar-btn"
+              aria-label="Abrir carrito"
               onClick={() => setOpenCart(true)}
             >
               <CartWidget />

@@ -1,14 +1,16 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { CartContext } from "../context/CartContext";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { collection,doc,runTransaction,serverTimestamp,} from "firebase/firestore";
 import { db } from "../service/firebase";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { createReceipt, completeOrder } from "../service/orderReceipt";
 import EmptyCart from "./EmptyCart";
 import { useForm } from "react-hook-form";
 import "../css/Checkout.css";
 
 const Checkout = () => {
-  const [orderId, setOrderId] = useState("");
+  const navigate = useNavigate();
+  const submitting = useRef(false);
   const [loading, setLoading] = useState(false);
 
   const { cart, total, clear } = useContext(CartContext);
@@ -20,54 +22,90 @@ const Checkout = () => {
     getValues,
   } = useForm();
 
-  const terminarCompra = (data) => {
-    const { name, lastname, address, email } = data;
+  const terminarCompra = async (data) => {
+    if (submitting.current || cart.length === 0) return;
+    submitting.current = true;
 
     setLoading(true);
 
-    const orden = {
-      comprador: { name, lastname, address, email },
-      carrito: cart,
-      total: total(),
-      fecha: serverTimestamp(),
-    };
+    try {
+      const { name, lastname, address, email } = data;
 
-    const orderColl = collection(db, "orders");
+      const orderColl = collection(db, "orders");
+      const orderRef = doc(orderColl);
 
-    addDoc(orderColl, orden)
-      .then((res) => {
-        clear();
-        setOrderId(res.id);
-      })
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
+      const productos = cart.map((item) => ({
+        ref: doc(db, "products", String(item.id)),
+        quantity: item.quantity,
+        id: item.id,
+      }));
+
+      const pendingReceipt = createReceipt(orderRef.id, cart, total());
+      const receipt = await completeOrder({
+        receipt: pendingReceipt,
+        commit: () => runTransaction(db, async (transaction) => {
+          // Primero leemos todos los productos.
+          const snapshots = [];
+
+          for (const producto of productos) {
+            const snapshot = await transaction.get(producto.ref);
+
+            if (!snapshot.exists()) {
+              throw new Error(`El producto ${producto.id} no existe.`);
+            }
+
+            const stock = snapshot.data().stock;
+
+            if (
+              !Number.isInteger(producto.quantity) ||
+              producto.quantity <= 0 ||
+              !Number.isInteger(stock) ||
+              stock < producto.quantity
+            ) {
+              throw new Error(
+                `Stock insuficiente para el producto ${producto.id}.`
+              );
+            }
+
+            snapshots.push(snapshot);
+          }
+
+          // Después de todas las lecturas, actualizamos el stock.
+          productos.forEach((producto, index) => {
+            const stockActual = snapshots[index].data().stock;
+
+            transaction.update(producto.ref, {
+              stock: stockActual - producto.quantity,
+            });
+          });
+
+          // Creamos la orden dentro de la misma transacción.
+          transaction.set(orderRef, {
+            comprador: { name, lastname, address, email },
+            carrito: cart,
+            total: pendingReceipt.total,
+            fecha: serverTimestamp(),
+          });
+        }),
+      });
+
+      navigate(`/order-confirmation/${orderRef.id}`, { state: { receipt }, replace: true });
+      clear();
+    } catch (error) {
+      console.error("Error al finalizar la compra:", error);
+      alert(error.message || "No se pudo completar la compra.");
+    } finally {
+      submitting.current = false;
+      setLoading(false);
+    }
   };
 
-  if (!cart.length && !orderId) {
+  if (!cart.length) {
     return <EmptyCart />;
   }
 
   return (
     <main className="checkout-page">
-      {orderId ? (
-        <div className="checkout-success">
-          <h1>¡Gracias por tu compra!</h1>
-
-          <p>
-            Tu pedido ya fue registrado correctamente en
-            <strong> Insomnio Records.</strong>
-          </p>
-
-          <div className="order-box">
-            <h4>Número de orden</h4>
-            <span>{orderId}</span>
-          </div>
-
-          <Link className="checkout-home" to="/">
-            Volver a la disquería
-          </Link>
-        </div>
-      ) : (
         <div className="checkout-container">
           <h1>Finalizar compra</h1>
 
@@ -77,7 +115,7 @@ const Checkout = () => {
 
           <form
             className="checkout-form"
-            onSubmit={handleSubmit(terminarCompra)}
+            onSubmit={(event) => handleSubmit(terminarCompra)(event)}
           >
             <input
               type="text"
@@ -149,7 +187,6 @@ const Checkout = () => {
             </button>
           </form>
         </div>
-      )}
     </main>
   );
 };
