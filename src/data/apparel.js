@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Fuente de datos de las remeras: códigos, slugs, imágenes y encuadres SVG.
+ * closing conecta cada diseño con su frase editorial. La colección aún no habilita compras.
+ */
 import collectionImage from "../img/apparel-vol-001.png";
 import surveillanceImage from "../img/apparel-vigilancia-total.png";
 import midnightDesignsImage from "../img/apparel-ir-06-ir-07.png";

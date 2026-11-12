@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Página /order-confirmation/:orderId: muestra el comprobante tras una compra exitosa.
+ * Prioriza el state de navegación y luego sessionStorage. No vuelve a comprar ni consulta el pedido remoto.
+ */
 import { useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { isValidReceipt, readReceipt } from "../service/orderReceipt";
@@ -5,6 +9,7 @@ import TransmissionBanner from "./TransmissionBanner";
 import { transmissions } from "../data/transmissions";
 import "../css/OrderConfirmation.css";
 
+// Formatea importes en pesos argentinos para cada línea y el total del comprobante.
 const money = (value) => new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }).format(value);
 
 /** Presenta el comprobante de una transacción exitosa; esta pantalla nunca genera órdenes. */
@@ -14,6 +19,7 @@ const OrderConfirmation = () => {
   const receipt = isValidReceipt(state?.receipt, orderId) ? state.receipt : readReceipt(orderId);
   const [copyStatus, setCopyStatus] = useState("");
 
+  // Copia el ID al portapapeles y muestra un estado legible si el navegador rechaza el permiso.
   const copyOrderId = async () => {
     try {
       await navigator.clipboard.writeText(receipt.orderId);

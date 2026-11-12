@@ -1,4 +1,8 @@
-﻿export const irMessages = [
+/**
+ * CONTEXTO: Contenido de IR SAYS: cada frase tiene id, main y sub; cada paleta define fondo y acento.
+ * Para ampliar la sección, agregar entradas a estos arrays sin modificar el componente.
+ */
+export const irMessages = [
   { id: '01', main: 'EL SISTEMA ESTÁ FUNCIONANDO NORMALMENTE.', sub: 'ESO NOS PREOCUPA.' },
   { id: '02', main: 'NUESTROS EMPLEADOS DESCANSAN OCHO HORAS DIARIAS.', sub: 'ENTRE TODOS.' },
   { id: '03', main: 'ESTE MENSAJE FUE ESCRITO POR UN HUMANO.', sub: 'NO PUDIMOS VERIFICARLO.' },
@@ -25,6 +29,8 @@ export const irPalettes = [
   { background: '#FFD84B', accent: '#FF5CBA' },
   { background: '#A882F6', accent: '#BAFF35' },
 ];
+// Sortea entre todas las posiciones menos la anterior; random puede inyectarse en las pruebas.
+// Con cero o una entrada devuelve cero: los arrays de contenido deben mantenerse no vacíos.
 export function nextIndex(current, length, random = Math.random) {
   if (length < 2) return 0;
   const candidate = Math.floor(random() * (length - 1));

@@ -1,3 +1,6 @@
+/**
+ * CONTEXTO: Tarjeta de catálogo: recibe prod, muestra imagen/nombre/precio y enlaza a /item/:id.
+ */
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';

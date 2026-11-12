@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Página /item/:id: consulta el disco y el catálogo de items en paralelo.
+ * Entrega ambos a ItemDetail para mostrar la ficha y sugerencias; distingue carga y documento inexistente.
+ */
 import { useEffect, useState } from "react";
 import ItemDetail from "./ItemDetail";
 import { useParams } from "react-router-dom";
@@ -12,6 +16,7 @@ const ItemDetailContainer = () => {
 
   const { id } = useParams();
 
+  // Cambiar el ID de la URL dispara otra lectura. Promise.all espera ficha y catálogo juntos.
   useEffect(() => {
     setLoading(true);
 

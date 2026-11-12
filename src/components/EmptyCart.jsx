@@ -1,3 +1,6 @@
+/**
+ * CONTEXTO: Estado de carrito vacío, compartido por /cart y checkout. Ofrece volver al catálogo.
+ */
 import { Link } from "react-router-dom";
 import { FaRecordVinyl } from "react-icons/fa";
 import "../css/EmptyCart.css";

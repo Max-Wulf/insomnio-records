@@ -1,3 +1,6 @@
+/**
+ * CONTEXTO: Página /apparel: presenta la colección completa reutilizando ApparelCollection.
+ */
 import { Link } from "react-router-dom";
 import ApparelCollection from "./ApparelCollection";
 

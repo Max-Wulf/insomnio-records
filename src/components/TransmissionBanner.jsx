@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Banner editorial compartido: recibe código, frases, remate, variante y gráfico opcional.
+ * compact reduce la presentación; el componente es visual y no consulta datos.
+ */
 import "../css/TransmissionBanner.css";
 import "../css/BroadcastTheme.css";
 

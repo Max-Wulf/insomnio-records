@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Secciones editoriales del Home: señal nocturna, frecuencia y adelanto de Apparel.
+ * Compone banners y enlaces existentes, sin manejar compras ni consultas a Firestore.
+ */
 import TransmissionBanner from "./TransmissionBanner";
 import { Link } from "react-router-dom";
 import { transmissions } from "../data/transmissions";

@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Vista del carrito completo: lista productos, calcula subtotales y permite eliminar o vaciar.
+ * El enlace al checkout inicia el formulario; esta pantalla no escribe órdenes en Firestore.
+ */
 import React, { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { Link } from "react-router-dom";
@@ -7,6 +11,7 @@ import "../css/CartView.css";
 const CartView = () => {
   const { cart, clear, removeItem, total } = useContext(CartContext);
 
+  // Pide confirmación con SweetAlert antes de llamar a clear; cancelar conserva el carrito.
   const preConfirm = () => {
     Swal.fire({
       title: "¿Vaciar carrito?",

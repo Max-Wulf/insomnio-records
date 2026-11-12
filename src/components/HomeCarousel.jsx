@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Carrusel de portada: presenta las placas visuales y sus accesos.
+ * React Bootstrap administra el carrusel; este componente no carga productos ni altera el carrito.
+ */
 import Carousel from "react-bootstrap/Carousel";
 import "../css/InsomnioIdentity.css";
 import "../css/HomeCarousel.css";

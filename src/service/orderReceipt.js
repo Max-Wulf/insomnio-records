@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Comprobante local: prepara, valida y recupera el resumen de la última compra de esta pestaña.
+ * sessionStorage no es una fuente de confianza para autenticar pedidos ni un historial remoto.
+ */
 export const RECEIPT_KEY = "insomnio-last-receipt-v1";
 
 /** Copia únicamente los datos comerciales; nunca conserva los datos del comprador. */

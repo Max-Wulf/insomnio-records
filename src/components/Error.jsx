@@ -1,3 +1,6 @@
+/**
+ * CONTEXTO: Página 404 para rutas no reconocidas. Ofrece volver al catálogo; no captura errores de red ni de React.
+ */
 import { Link } from "react-router-dom";
 import errorBg from "../img/error.avif";
 

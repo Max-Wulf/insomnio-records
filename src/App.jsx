@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Mapa de navegación: define todas las rutas. Navbar y Footer se comparten entre páginas.
+ * CartProvider envuelve la aplicación para que catálogo, carrito y checkout compartan estado.
+ */
 import NavbarRB from "./components/Navbar";
 import ItemListContainer from "./components/ItemListContainer";
 import ItemDetailContainer from "./components/ItemDetailContainer";
@@ -7,6 +11,7 @@ import OrderConfirmation from "./components/OrderConfirmation";
 import ApparelCatalog from "./components/ApparelCatalog";
 import ApparelDetail from "./components/ApparelDetail";
 import IRSays from "./components/IRSays";
+import UserAccount from "./components/UserAccount";
 import Error from "./components/Error";
 import { CartProvider } from "./context/CartContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -28,6 +33,7 @@ function App() {
           <Route path="/apparel" element={<ApparelCatalog />} />
           <Route path="/apparel/:slug" element={<ApparelDetail />} />
           <Route path="/ir-says" element={<IRSays />} />
+          <Route path="/mi-cuenta" element={<UserAccount />} />
           <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
           <Route path="*" element={<Error />} />
         </Routes>

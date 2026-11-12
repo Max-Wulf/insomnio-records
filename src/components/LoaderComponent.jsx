@@ -1,3 +1,6 @@
+/**
+ * CONTEXTO: Indicador de carga reutilizable: recibe el texto desde la pantalla que espera los datos.
+ */
 import React from 'react'
 import { Spinner } from 'react-bootstrap'
 

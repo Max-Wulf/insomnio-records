@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Inicializa Firebase con la configuración del proyecto y exporta db para las consultas.
+ * Las pantallas consumen Firestore directamente desde el navegador; no es un backend propio.
+ */
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 

@@ -1,3 +1,6 @@
+/**
+ * CONTEXTO: Lista presentacional: recibe data ya cargada y genera una tarjeta Item por producto.
+ */
 import React from 'react'
 import Item from './Item'
 

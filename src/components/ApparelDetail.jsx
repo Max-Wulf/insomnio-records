@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Página /apparel/:slug: busca el diseño local, muestra frente/dorso y su cierre editorial.
+ * IR-01 usa el banner de observación; los otros diseños usan ProductEditorialFooter. Un slug desconocido tiene salida propia.
+ */
 import { Link, useParams } from "react-router-dom";
 import { apparelDesigns } from "../data/apparel";
 import ProductEditorialFooter from "./ProductEditorialFooter";

@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Cierre editorial compartido: variant selecciona el mensaje en apparelClosings.
+ * productCode identifica la remera; la variante music agrega el texto del algoritmo. Sin variante válida no se renderiza.
+ */
 import { apparelClosings } from "../data/apparel";
 import "../css/ApparelDetail.css";
 import "../css/BroadcastTheme.css";

@@ -1,4 +1,8 @@
-﻿import { useState } from "react";
+/**
+ * CONTEXTO: Página /ir-says: terminal de frases con paletas de colores y contador decorativo.
+ * El estado guarda índices y cantidad de transmisiones; NEXT cambia frase y paleta sin repetición inmediata.
+ */
+import { useState } from "react";
 import { irMessages, irPalettes, nextIndex } from "../data/irMessages";
 import "../css/IRSays.css";
 
@@ -6,6 +10,7 @@ const IRSays = () => {
   const [screen, setScreen] = useState({ message: 0, palette: 0, count: 1 });
   const message = irMessages[screen.message];
   const palette = irPalettes[screen.palette];
+  // Selecciona índices distintos a los actuales y aumenta el contador; no hay puntaje ni compras.
   const next = () => setScreen({ message: nextIndex(screen.message, irMessages.length), palette: nextIndex(screen.palette, irPalettes.length), count: screen.count + 1 });
   return (
     <main className="ir-says" aria-labelledby="ir-says-title" style={{ "--ir-screen": palette.background, "--ir-detail": palette.accent }}>

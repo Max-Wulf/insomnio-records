@@ -1,3 +1,6 @@
+/**
+ * CONTEXTO: Página /cart: decide entre CartView y EmptyCart según el contenido del contexto.
+ */
 import React, { useContext } from 'react'
 import CartView from './CartView'
 import { CartContext } from '../context/CartContext'

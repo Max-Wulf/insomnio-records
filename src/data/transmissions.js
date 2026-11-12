@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Textos y variantes de los banners editoriales. TransmissionBanner recibe estos objetos como props.
+ * Editar aquí los mensajes permite reutilizarlos sin duplicarlos en cada página.
+ */
 export const transmissions = {
   midnight: {
     code: "IR-07 / 03:17 AM",

@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Ícono pixelado del carrito y contador de unidades leído desde CartContext.
+ * Solo presenta el estado: el botón que lo envuelve en Navbar abre el panel lateral.
+ */
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 

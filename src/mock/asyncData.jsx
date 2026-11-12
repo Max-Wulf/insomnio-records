@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Datos de ejemplo y consultas simuladas con demora. El catálogo actual consulta Firestore.
+ * Los IDs de este array están comentados: getOneProduct necesita IDs reales para encontrar productos.
+ */
 import aerial13 from "../img/aerial13.png";
 import elmamut from "../img/elmamut.png";
 import olvidar from "../img/olvidar.jpg";
@@ -374,6 +378,7 @@ export const productos = [
 
 ];
 
+// Simula una consulta: resuelve el array completo tras un segundo, sin llamar a Firebase.
 export const getProducts = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -382,6 +387,7 @@ export const getProducts = () => {
   });
 };
 
+// Simula una búsqueda por ID numérico; devuelve undefined si no encuentra coincidencia.
 export const getOneProduct = (id) => {
   return new Promise((resolve) => {
     setTimeout(() => {

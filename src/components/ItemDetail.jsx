@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Ficha del disco: muestra metadatos, tracklist y hasta cinco sugeridos de la misma categoría.
+ * El selector llama a onAdd; purchase cambia el botón por un acceso al carrito después de solicitar el agregado.
+ */
 import React, { useState, useContext } from "react";
 import ItemCount from "./ItemCount";
 import Item from "./Item";
@@ -15,11 +19,14 @@ const ItemDetail = ({ detail, productos=[] }) => {
   if (!detail) return <h2>Cargando producto...</h2>;
   
 
+  // Delega la validación al contexto y cambia la interfaz a la opción de ir al carrito.
+  // purchase solo indica que se hizo la solicitud: addItem no devuelve confirmación del agregado.
   const onAdd = (cantidad) => {
     addItem(detail, cantidad);
     setPurchase(true);
   };
 
+  // Recomendación local sencilla: misma categoría, excluye el disco actual y limita a cinco.
   const sugeridos = productos
   .filter(
     (prod) =>

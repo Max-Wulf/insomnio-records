@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Panel lateral del carrito, controlado por isOpen y onClose desde Navbar.
+ * Sus controles usan CartContext, por lo que modifican el mismo carrito que la página /cart.
+ */
 import { Link } from "react-router-dom";
 import { BsX, BsDash, BsPlus } from "react-icons/bs";
 import { useContext } from "react";

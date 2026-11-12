@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Colección reutilizable: preview muestra un adelanto en Home; sin preview, muestra todos los diseños.
+ * Los enlaces se construyen con los slugs de apparelDesigns; no hay stock ni venta de remeras habilitados.
+ */
 import { Link } from "react-router-dom";
 import collectionImage from "../img/apparel-vol-001.png";
 import surveillanceImage from "../img/apparel-vigilancia-total.png";

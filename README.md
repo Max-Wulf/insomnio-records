@@ -4,6 +4,12 @@ Disquería digital de música alternativa desarrollada con React, Vite, JavaScri
 
 El proyecto nace como un ecommerce de React y busca evolucionar hacia una aplicación web con catálogo, gestión de compras, usuarios y contenido musical. Actualmente permite explorar discos, administrar un carrito y ejecutar un flujo de generación de órdenes. La integración completa de inventario todavía requiere validación.
 
+## Referencias visuales
+
+La estética del sitio toma como referencia los separadores de Adult Swim: composición minimalista en blanco y negro, mensajes breves, humor absurdo y ritmo de transmisión nocturna. Insomnio Records desarrolla una identidad propia a partir de esas referencias, con textos, componentes e ilustraciones del proyecto.
+
+**[IR] SAYS** lleva ese tono a una terminal arcade de frases, con tipografías pixeladas, paletas fluorescentes y un glitch breve al cambiar de mensaje. El cursor parpadea suavemente; ambas animaciones se desactivan con `prefers-reduced-motion`.
+
 ## Tecnologías utilizadas
 
 Versiones declaradas en `package.json`; `package-lock.json` registra las versiones resueltas.

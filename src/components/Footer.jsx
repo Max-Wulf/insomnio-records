@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Footer general de todas las rutas. Clasifica la ruta para aplicar el tema Home o monocromo.
+ * Reutiliza el manifiesto institucional y enlaces; los mensajes propios de remeras se renderizan en ApparelDetail.
+ */
 import "../css/Footer.css";
 import { Link, useLocation } from "react-router-dom";
 import { FaInstagram, FaSpotify } from "react-icons/fa";

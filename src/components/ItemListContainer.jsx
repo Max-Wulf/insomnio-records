@@ -1,3 +1,7 @@
+/**
+ * CONTEXTO: Home (/) y categorías (/category/:type): obtiene items de Firestore y administra carga y resultados.
+ * La categoría se filtra en el cliente. Sin type también muestra el carrusel y las secciones editoriales.
+ */
 import { useEffect, useState } from "react";
 import ItemList from "./ItemList";
 import LoaderComponent from "./LoaderComponent";
@@ -16,6 +20,8 @@ const ItemListContainer = () => {
 
   const { type } = useParams();
 
+  // Se repite al cambiar type: consulta items, agrega los IDs de Firestore y filtra por categoria.
+  // Hoy los errores se registran en consola; todavía no hay una pantalla específica de error de carga.
   useEffect(() => {
     setLoading(true);
 

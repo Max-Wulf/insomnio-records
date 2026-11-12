@@ -1,3 +1,9 @@
+/**
+ * CONTEXTO: Página /checkout: valida datos con react-hook-form y registra la compra mediante una transacción.
+ * Solo tras el éxito guarda el comprobante, navega a confirmación y vacía el carrito.
+ * Atención: lee stock de products, mientras el catálogo lee items; revisar colecciones e IDs al trabajar la lógica.
+ * El total proviene del carrito del navegador: aún falta validarlo contra una fuente confiable del servidor.
+ */
 import { useState, useContext, useRef } from "react";
 import { CartContext } from "../context/CartContext";
 import { collection,doc,runTransaction,serverTimestamp,} from "firebase/firestore";
@@ -10,6 +16,7 @@ import "../css/Checkout.css";
 
 const Checkout = () => {
   const navigate = useNavigate();
+  // El ref bloquea envíos duplicados inmediatamente; loading refleja ese estado en el botón.
   const submitting = useRef(false);
   const [loading, setLoading] = useState(false);
 
@@ -22,6 +29,8 @@ const Checkout = () => {
     getValues,
   } = useForm();
 
+  // Recibe los campos validados. Comprueba stock y escribe orden/descuentos de forma atómica.
+  // Si falla, conserva el carrito y libera el bloqueo para permitir reintentar.
   const terminarCompra = async (data) => {
     if (submitting.current || cart.length === 0) return;
     submitting.current = true;
@@ -43,6 +52,7 @@ const Checkout = () => {
       const pendingReceipt = createReceipt(orderRef.id, cart, total());
       const receipt = await completeOrder({
         receipt: pendingReceipt,
+        // Firestore puede reintentar este callback: sus efectos deben limitarse a la transacción.
         commit: () => runTransaction(db, async (transaction) => {
           // Primero leemos todos los productos.
           const snapshots = [];
@@ -89,6 +99,7 @@ const Checkout = () => {
         }),
       });
 
+      // Se llega aquí únicamente después de confirmar la escritura remota y preparar el resumen.
       navigate(`/order-confirmation/${orderRef.id}`, { state: { receipt }, replace: true });
       clear();
     } catch (error) {
