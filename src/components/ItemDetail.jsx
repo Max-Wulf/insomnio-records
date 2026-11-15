@@ -17,6 +17,7 @@ const ItemDetail = ({ detail, productos=[] }) => {
   const { addItem } = useContext(CartContext);
 
   if (!detail) return <h2>Cargando producto...</h2>;
+  const agotado =detail.stock <=0;
   
 
   // Delega la validación al contexto y cambia la interfaz a la opción de ir al carrito.
@@ -72,12 +73,22 @@ return (
 
         <h2 className="detail-price">${detail.price}</h2>
 
-        <p className="detail-stock">
-          <BsCheckCircle className="stock-icon" />
-          Stock disponible: {detail.stock} unidades
+        <p className={agotado ? "detail-stock agotado" : "detail-stock"}>
+          {agotado ?(
+            <> X SIN STOCK </>
+          ) :(
+            <>
+              <BsCheckCircle className="stock-icon" />
+              Stock disponible: {detail.stock} unidades
+            </>
+          )}
         </p>
 
-        {purchase ? (
+        {agotado ? (
+          <button className="btn-agotado" disabled>
+            AGOTADO
+          </button>
+        ) : purchase ? (
           <Link className="btn-purple" to="/cart">
             <BsCart3 />
             Ir al carrito

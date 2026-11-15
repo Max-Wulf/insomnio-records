@@ -1,21 +1,19 @@
-/**
- * CONTEXTO: Inicializa Firebase con la configuración del proyecto y exporta db para las consultas.
- * Las pantallas consumen Firestore directamente desde el navegador; no es un backend propio.
- */
+
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
-  authDomain: "disco-insomnio.firebaseapp.com",
-  projectId: "disco-insomnio",
-  storageBucket: "disco-insomnio.firebasestorage.app",
-  messagingSenderId: "329678324326",
-  appId: "1:329678324326:web:bc9d4363e78042079023a7",
-  measurementId: "G-1X273JTD0R"
- 
+  authDomain: "proyecto-disquera.firebaseapp.com",
+  projectId: "proyecto-disquera",
+  storageBucket: "proyecto-disquera.firebasestorage.app",
+  messagingSenderId: "245333181981",
+  appId: "1:245333181981:web:ec53dedc1deb4f3938a8f4",
+  measurementId: "G-85DDE6BW4B"
 };
 
 const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
+export const auth = getAuth(app);

@@ -44,7 +44,7 @@ const Checkout = () => {
       const orderRef = doc(orderColl);
 
       const productos = cart.map((item) => ({
-        ref: doc(db, "products", String(item.id)),
+        ref: doc(db, "items", String(item.id)),
         quantity: item.quantity,
         id: item.id,
       }));
