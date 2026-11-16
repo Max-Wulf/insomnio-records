@@ -8,7 +8,9 @@ import LoaderComponent from "./LoaderComponent";
 import { useParams } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../service/firebase";
+import { Link } from "react-router-dom";
 import HomeCarousel from "./HomeCarousel";
+import IR8Ball from "./IR8Ball";
 import PlatformSections from "./PlatformSections";
 import ProductEditorialFooter from "./ProductEditorialFooter";
 import "../css/Platform.css";
@@ -65,9 +67,25 @@ const ItemListContainer = () => {
     {loading ? (
       <LoaderComponent text="Cargando productos..." />
     ) : (
-      <ItemList data={data} />
+      <>
+        {/* En Home mostramos solo 6 discos.
+            En otras rutas conservamos el listado completo. */}
+        <ItemList data={!type ? data.slice(0, 5) : data} />
+
+        {/* Botón para explorar el catálogo completo */}
+        {!type && (
+          <div className="home-catalog-action">
+            <Link to="/productos" className="home-catalog-button">
+              VER TODOS LOS DISCOS →
+            </Link>
+          </div>
+        )}
+      </>
     )}
     </section>
+
+    {/* Adelanto del juego: el enlace abre la secci?n completa del cat?logo. */}
+    {!type && <IR8Ball preview />}
 
     <ProductEditorialFooter variant="music" />
 

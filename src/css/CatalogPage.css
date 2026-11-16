@@ -1,0 +1,62 @@
+
+/*
+ * CONTEXTO: Estilos del catálogo de CDs.
+ *
+ * - Organiza los filtros de categorías.
+ * - Mantiene la estética oscura de Insomnio.
+ * - Destaca el filtro seleccionado.
+ * - Adapta los botones a pantallas pequeñas.
+ */
+
+.catalog-filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 28px 16px;
+}
+
+.catalog-filter {
+  padding: 10px 20px;
+  background-color: #111;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 4px;
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* Cuando pasamos el mouse por un filtro */
+.catalog-filter:hover {
+  background-color: #292929;
+  border-color: #aaa;
+}
+
+/* Categoría actualmente seleccionada */
+.catalog-filter.active {
+  background-color: #eee;
+  color: #111;
+  border-color: #eee;
+}
+
+/* Navegación mediante teclado */
+.catalog-filter:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+/* Adaptación para celulares */
+@media (max-width: 600px) {
+  .catalog-filters {
+    gap: 8px;
+    margin: 20px 12px;
+  }
+
+  .catalog-filter {
+    padding: 9px 14px;
+    font-size: 13px;
+  }
+}

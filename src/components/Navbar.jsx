@@ -59,9 +59,15 @@ function NavbarRB() {
                 <NavDropdown.Item as={NavLink} to="/category/internacional">
                   Internacionales
                 </NavDropdown.Item>
-                <NavDropdown.Item as={NavLink} to="/category/grandes-exitos">
-                  Grandes Exitos
+                {/* Merch utiliza el catálogo independiente de Apparel */}
+                <NavDropdown.Item
+                  as={NavLink}
+                  to="/apparel"
+                  onClick={() => setExpanded(false)}
+                >
+                  Merch
                 </NavDropdown.Item>
+                
               </NavDropdown>
               <Nav.Link href="/#senal-nocturna">Señal nocturna</Nav.Link>
               <Nav.Link href="/#apparel">Apparel</Nav.Link>

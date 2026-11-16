@@ -1,0 +1,357 @@
+
+/*
+ * IR / 8-BALL
+ * Diseño horizontal y animación de desplazamiento.
+ */
+
+.ir8-section {
+  width: 100%;
+  padding: 75px 24px;
+  background: #101012;
+  color: #f5f5f5;
+  overflow: hidden;
+  border-top: 1px solid #3c3040;
+}
+
+.ir8-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ir8-label {
+  font-family: monospace;
+  color: #c69fd8;
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin-bottom: 28px;
+}
+
+/*
+ * Dos columnas:
+ * izquierda para la bola;
+ * derecha para los controles o el resultado.
+ */
+.ir8-stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  align-items: center;
+  min-height: 280px;
+  overflow: hidden;
+}
+
+/* Bola negra */
+.ir8-ball {
+  position: relative;
+  z-index: 2;
+  width: 170px;
+  height: 170px;
+  margin: 0 auto;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: radial-gradient(
+    circle at 30% 25%,
+    #555 0%,
+    #252525 35%,
+    #080808 75%,
+    #000 100%
+  );
+
+  border: 1px solid #555;
+
+  box-shadow:
+    inset -15px -15px 25px #000,
+    0 18px 25px rgba(0, 0, 0, 0.6);
+}
+
+/* Número ocho */
+.ir8-ball-number {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  background: #f4f4f4;
+  color: #111;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: Arial, sans-serif;
+  font-size: 60px;
+  font-weight: 900;
+}
+
+/* Contenido derecho */
+.ir8-content {
+  position: relative;
+  z-index: 1;
+  padding: 20px 25px;
+}
+
+.ir8-content--hidden {
+  visibility: hidden;
+}
+
+.ir8-intro h2 {
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 900;
+  line-height: 1.05;
+  margin: 0 0 20px;
+}
+
+.ir8-intro p {
+  color: #aaa;
+  font-size: 17px;
+  margin-bottom: 28px;
+}
+
+/* Botón principal y enlace del Home */
+.ir8-button {
+  display: inline-block;
+  padding: 17px 25px;
+  border: 0;
+  border-radius: 0;
+
+  background: #f4f4f4;
+  color: #111;
+
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-decoration: none;
+
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ir8-button:hover {
+  background: #c69fd8;
+  color: #111;
+}
+
+.ir8-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/*
+ * Animación:
+ * La bola viaja hacia la derecha.
+ * Sale del escenario.
+ * Reaparece por la izquierda.
+ * Regresa a su posición original.
+ *
+ * El recorrido se calcula con el ancho del escenario.
+ */
+.ir8-ball--rolling {
+  animation: ir-ball-travel 3.5s linear 1;
+}
+
+@keyframes ir-ball-travel {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+
+  45% {
+    transform:
+      translateX(110vw)
+      rotate(540deg);
+  }
+
+  45.01% {
+    transform:
+      translateX(-110vw)
+      rotate(540deg);
+  }
+
+  100% {
+    transform:
+      translateX(0)
+      rotate(1080deg);
+  }
+}
+
+/* Resultado */
+.ir8-result-label {
+  display: block;
+  color: #c69fd8;
+  font-family: monospace;
+  font-size: 13px;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.ir8-result-card {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.ir8-result-cover {
+  width: 145px;
+  height: 145px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border: 1px solid #4c3a52;
+}
+
+.ir8-result-info {
+  min-width: 0;
+}
+
+.ir8-result-artist {
+  display: block;
+  font-size: 13px;
+  color: #aaa;
+  margin-bottom: 10px;
+}
+
+.ir8-result-info h2 {
+  font-size: clamp(22px, 3vw, 34px);
+  font-weight: 900;
+  line-height: 1.1;
+  margin: 0 0 16px;
+}
+
+.ir8-result-link {
+  color: #d8b0e9;
+  font-family: monospace;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.ir8-result-link:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.ir8-again {
+  margin-top: 24px;
+  padding: 12px 18px;
+  background: transparent;
+  color: #d8b0e9;
+  border: 1px solid #765282;
+
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.ir8-again:hover {
+  background: #26182d;
+}
+
+/* Línea inferior */
+.ir8-status {
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid #454045;
+
+  font-family: monospace;
+  color: #a58cad;
+  font-size: 12px;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+/* Home: versión más compacta */
+.ir8-section--preview {
+  padding: 50px 24px;
+}
+
+.ir8-section--preview .ir8-stage {
+  min-height: 210px;
+}
+
+.ir8-section--preview .ir8-ball {
+  width: 125px;
+  height: 125px;
+}
+
+.ir8-section--preview .ir8-ball-number {
+  width: 62px;
+  height: 62px;
+  font-size: 44px;
+}
+
+/* Adaptación para celulares */
+@media (max-width: 700px) {
+  .ir8-section {
+    padding: 45px 15px;
+  }
+
+  .ir8-stage {
+    grid-template-columns: 35% 65%;
+    min-height: 240px;
+  }
+
+  .ir8-ball {
+    width: 100px;
+    height: 100px;
+  }
+
+  .ir8-ball-number {
+    width: 50px;
+    height: 50px;
+    font-size: 35px;
+  }
+
+  .ir8-content {
+    padding: 12px;
+  }
+
+  .ir8-intro h2 {
+    font-size: 25px;
+  }
+
+  .ir8-intro p {
+    font-size: 13px;
+  }
+
+  .ir8-button {
+    padding: 12px;
+    font-size: 10px;
+  }
+
+  .ir8-result-card {
+    gap: 12px;
+  }
+
+  .ir8-result-cover {
+    width: 80px;
+    height: 80px;
+  }
+
+  .ir8-result-info h2 {
+    font-size: 18px;
+  }
+
+  .ir8-result-artist {
+    font-size: 11px;
+  }
+
+  .ir8-section--preview .ir8-ball {
+    width: 90px;
+    height: 90px;
+  }
+
+  .ir8-section--preview .ir8-ball-number {
+    width: 45px;
+    height: 45px;
+    font-size: 32px;
+  }
+}
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  .ir8-ball--rolling {
+    animation-duration: 0.01ms;
+  }
+}

@@ -149,7 +149,9 @@ body .cart-navbar-btn:active {
 
 /* Match the pixel cart's hard shadow on primary actions, including link buttons. */
 body #root :is(.btn, .carousel-btn, .btn-purple, .btn-empty, .btn-checkout,
-  .checkout-btn, .checkout-home, .empty-btn, .drawer-cart-link, .drawer-continue) {
+  .checkout-btn, .checkout-home, .empty-btn, .drawer-cart-link, .drawer-continue,
+  .home-catalog-button, .catalog-filter, .btn-agotado, .navbar-toggler,
+  .cart-navbar-btn, .user-navbar-btn) {
   border-radius: 0;
   box-shadow: 3px 3px 0 #646464;
   transition: background-color .15s, color .15s, border-color .15s,
@@ -157,18 +159,24 @@ body #root :is(.btn, .carousel-btn, .btn-purple, .btn-empty, .btn-checkout,
 }
 
 body #root :is(.btn, .carousel-btn, .btn-purple, .btn-empty, .btn-checkout,
-  .checkout-btn, .checkout-home, .empty-btn, .drawer-cart-link, .drawer-continue):is(:hover, :focus-visible):not(:disabled):not(.disabled) {
+  .checkout-btn, .checkout-home, .empty-btn, .drawer-cart-link, .drawer-continue,
+  .home-catalog-button, .catalog-filter, .btn-agotado, .navbar-toggler,
+  .cart-navbar-btn, .user-navbar-btn):is(:hover, :focus-visible):not(:disabled):not(.disabled) {
   box-shadow: 3px 3px 0 var(--purple, #b5a0db);
 }
 
 body #root :is(.btn, .carousel-btn, .btn-purple, .btn-empty, .btn-checkout,
-  .checkout-btn, .checkout-home, .empty-btn, .drawer-cart-link, .drawer-continue):active:not(:disabled):not(.disabled) {
+  .checkout-btn, .checkout-home, .empty-btn, .drawer-cart-link, .drawer-continue,
+  .home-catalog-button, .catalog-filter, .btn-agotado, .navbar-toggler,
+  .cart-navbar-btn, .user-navbar-btn):active:not(:disabled):not(.disabled) {
   transform: translate(3px, 3px);
   box-shadow: none;
 }
 
 body #root :is(.btn, .carousel-btn, .btn-purple, .btn-empty, .btn-checkout,
-  .checkout-btn, .checkout-home, .empty-btn, .drawer-cart-link, .drawer-continue):is(:disabled, .disabled) {
+  .checkout-btn, .checkout-home, .empty-btn, .drawer-cart-link, .drawer-continue,
+  .home-catalog-button, .catalog-filter, .btn-agotado, .navbar-toggler,
+  .cart-navbar-btn, .user-navbar-btn):is(:disabled, .disabled) {
   box-shadow: none;
   transform: none;
 }
@@ -227,4 +235,57 @@ body .footer-bottom > span:first-child {
   body .transmission-status {
     font-size: .65rem;
   }
+}
+
+/* Shared button palette: square edges, hard shadows and a lilac interaction state. */
+body #root :is(.home-catalog-button, .catalog-filter, .btn-empty, .drawer-continue) {
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid #646464;
+  font-weight: 700;
+}
+
+body #root :is(.home-catalog-button, .catalog-filter, .btn-empty, .drawer-continue):hover {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--paper);
+}
+
+body #root .catalog-filter.active {
+  background: var(--purple);
+  color: var(--ink);
+  border-color: var(--purple);
+}
+
+body #root :is(.btn, .carousel-btn, .btn-purple, .btn-empty, .btn-checkout,
+  .checkout-btn, .checkout-home, .empty-btn, .drawer-cart-link, .drawer-continue,
+  .home-catalog-button, .catalog-filter, .navbar-toggler, .cart-navbar-btn,
+  .user-navbar-btn):focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 5px;
+}
+
+/* Compact controls retain their size and use the same palette. */
+body #root :is(.counter, .drawer-counter) {
+  border-radius: 0;
+  background: var(--panel);
+  border-color: #646464;
+}
+
+body #root :is(.counter button, .drawer-counter button, .drawer-close,
+  .drawer-remove, .cart-subtotal button) {
+  border-radius: 0;
+  color: var(--paper);
+  transition: color .15s, background-color .15s;
+}
+
+body #root :is(.counter button, .drawer-counter button, .drawer-close,
+  .drawer-remove, .cart-subtotal button):hover:not(:disabled) {
+  color: var(--purple);
+}
+
+body #root .btn-agotado {
+  background: var(--panel);
+  color: var(--muted);
+  border-color: var(--line);
 }

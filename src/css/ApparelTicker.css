@@ -1,0 +1,185 @@
+
+/*
+ * CONTEXTO: Cinta horizontal animada de Apparel.
+ * Movimiento continuo de derecha a izquierda.
+ */
+
+.apparel-ticker {
+  width: 100%;
+  overflow: hidden;
+  padding: 48px 0;
+  border-top: 1px solid #493050;
+}
+
+.apparel-ticker-heading {
+  padding: 0 24px 28px;
+}
+
+.apparel-ticker-heading h2 {
+  color: #fff;
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 800;
+  margin: 12px 0;
+}
+
+.apparel-ticker-heading p {
+  color: #aaa;
+}
+
+.apparel-ticker-viewport {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Contenedor que se mueve */
+.apparel-ticker-track {
+  display: flex;
+  width: max-content;
+  gap: 20px;
+  animation: apparel-scroll 35s linear infinite;
+}
+
+/* Cada tarjeta de remera */
+.apparel-ticker-card {
+  display: block;
+  flex: 0 0 260px;
+  width: 260px;
+  background: #17121b;
+  border: 1px solid #493050;
+  text-decoration: none;
+  color: #fff;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.apparel-ticker-card:hover {
+  border-color: #b268d0;
+  color: #fff;
+}
+
+.apparel-ticker-card:focus-visible {
+  outline: 2px solid #d4a4e8;
+  outline-offset: -3px;
+}
+
+/* Imagen de cada remera */
+.apparel-ticker-image {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: #0b0b0b;
+  overflow: hidden;
+}
+
+.apparel-ticker-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Diseño provisional mientras faltan imágenes individuales */
+.apparel-ticker-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  text-align: center;
+  background: linear-gradient(145deg, #17121b, #080808);
+}
+
+.apparel-ticker-placeholder span {
+  color: #b268d0;
+  font-family: monospace;
+  font-size: 13px;
+}
+
+.apparel-ticker-placeholder strong {
+  color: #fff;
+  font-size: 21px;
+}
+
+/* Información inferior */
+.apparel-ticker-info {
+  padding: 18px;
+}
+
+.apparel-ticker-info h3 {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  margin: 10px 0 16px;
+}
+
+.apparel-ticker-link {
+  font-family: monospace;
+  font-size: 12px;
+  color: #d4a4e8;
+}
+
+.apparel-ticker-note {
+  font-family: monospace;
+  font-size: 11px;
+  color: #a68bb0;
+  padding: 18px 24px 0;
+}
+
+/* Desplazamiento hacia la izquierda */
+@keyframes apparel-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    /* Avanza exactamente la mitad del contenido duplicado */
+    transform: translateX(calc(-50% - 10px));
+  }
+}
+
+/* Pausa al interactuar */
+.apparel-ticker-viewport:hover .apparel-ticker-track,
+.apparel-ticker-viewport:focus-within .apparel-ticker-track {
+  animation-play-state: paused;
+}
+
+/* Celulares */
+@media (max-width: 600px) {
+  .apparel-ticker-card {
+    flex-basis: 200px;
+    width: 200px;
+  }
+
+  .apparel-ticker-track {
+    gap: 14px;
+    animation-duration: 28s;
+  }
+
+  .apparel-ticker-heading {
+    padding: 0 16px 24px;
+  }
+
+  .apparel-ticker-info h3 {
+    font-size: 16px;
+  }
+
+  /* Mitad del espacio entre tarjetas */
+  @keyframes apparel-scroll {
+    to {
+      transform: translateX(calc(-50% - 7px));
+    }
+  }
+}
+
+/* Respeta usuarios que prefieren menos animaciones */
+@media (prefers-reduced-motion: reduce) {
+  .apparel-ticker-track {
+    animation: none;
+  }
+
+  .apparel-ticker-viewport {
+    overflow-x: auto;
+  }
+}

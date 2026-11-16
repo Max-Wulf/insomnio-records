@@ -30,3 +30,38 @@ body {
     );
     padding: 60px 40px;
 }
+
+
+/* HOME: acceso al catálogo completo */
+
+.home-catalog-action {
+  display: flex;
+  justify-content: center;
+  padding: 0 20px 48px;
+}
+
+.home-catalog-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 13px 28px;
+  background: #111;
+  color: #fff;
+  border: 1px solid #777;
+  border-radius: 0;
+
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-decoration: none;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.home-catalog-button:hover {
+  background: #fff;
+  color: #000;
+}

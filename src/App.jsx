@@ -1,44 +1,124 @@
+
 /**
- * CONTEXTO: Mapa de navegación: define todas las rutas. Navbar y Footer se comparten entre páginas.
- * CartProvider envuelve la aplicación para que catálogo, carrito y checkout compartan estado.
+ * CONTEXTO: Mapa de navegación de Insomnio Records.
+ *
+ * - Home conserva ItemListContainer.
+ * - CatalogPage administra el catálogo de CDs.
+ * - Navbar y Footer son compartidos.
+ * - CartProvider comparte el estado del carrito.
  */
+
 import NavbarRB from "./components/Navbar";
+
 import ItemListContainer from "./components/ItemListContainer";
+import CatalogPage from "./components/CatalogPage";
+
 import ItemDetailContainer from "./components/ItemDetailContainer";
 import CartContainer from "./components/CartContainer";
 import Checkout from "./components/Checkout";
 import OrderConfirmation from "./components/OrderConfirmation";
+
 import ApparelCatalog from "./components/ApparelCatalog";
 import ApparelDetail from "./components/ApparelDetail";
+
 import IRSays from "./components/IRSays";
 import UserAccount from "./components/UserAccount";
 import Error from "./components/Error";
+
 import { CartProvider } from "./context/CartContext";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
+
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
+
+import "bootstrap/dist/css/bootstrap.min.css";
 import Footer from "./components/Footer";
 
 function App() {
   return (
     <BrowserRouter>
       <CartProvider>
+
+        {/* Navegación compartida */}
         <NavbarRB />
 
         <Routes>
-          <Route path="/" element={<ItemListContainer saludo="Categoría " />} />
-          <Route path="/category/:type" element={<ItemListContainer saludo="Categoría" />} />
-          <Route path="/item/:id" element={<ItemDetailContainer />} />
-          <Route path="/cart" element={<CartContainer />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/apparel" element={<ApparelCatalog />} />
-          <Route path="/apparel/:slug" element={<ApparelDetail />} />
-          <Route path="/ir-says" element={<IRSays />} />
-          <Route path="/mi-cuenta" element={<UserAccount />} />
-          <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
-          <Route path="*" element={<Error />} />
+
+          {/* HOME: conserva el diseño actual */}
+          <Route
+            path="/"
+            element={<ItemListContainer />}
+          />
+
+          {/* CATÁLOGO: todos los CDs */}
+          <Route
+            path="/productos"
+            element={<CatalogPage />}
+          />
+
+          {/* CATÁLOGO: filtrado por categoría */}
+          <Route
+            path="/category/:type"
+            element={<CatalogPage />}
+          />
+          {/* DETALLE DE UN DISCO */}
+          <Route
+            path="/item/:id"
+            element={<ItemDetailContainer />}
+          />
+
+          {/* CARRITO Y COMPRA */}
+          <Route
+            path="/cart"
+            element={<CartContainer />}
+          />
+
+          <Route
+            path="/checkout"
+            element={<Checkout />}
+          />
+
+          <Route
+            path="/order-confirmation/:orderId"
+            element={<OrderConfirmation />}
+          />
+
+          {/* APPAREL */}
+          <Route
+            path="/apparel"
+            element={<ApparelCatalog />}
+          />
+
+          <Route
+            path="/apparel/:slug"
+            element={<ApparelDetail />}
+          />
+
+          {/* JUEGO */}
+          <Route
+            path="/ir-says"
+            element={<IRSays />}
+          />
+
+          {/* USUARIO */}
+          <Route
+            path="/mi-cuenta"
+            element={<UserAccount />}
+          />
+
+          {/* RUTA NO ENCONTRADA */}
+          <Route
+            path="*"
+            element={<Error />}
+          />
+
         </Routes>
 
+        {/* Pie de página compartido */}
         <Footer />
+
       </CartProvider>
     </BrowserRouter>
   );

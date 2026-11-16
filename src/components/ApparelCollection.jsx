@@ -1,24 +1,31 @@
 /**
- * CONTEXTO: Colección reutilizable: preview muestra un adelanto en Home; sin preview, muestra todos los diseños.
- * Los enlaces se construyen con los slugs de apparelDesigns; no hay stock ni venta de remeras habilitados.
+ * CONTEXTO: Colección reutilizable de Insomnio Records.
+ * preview=true muestra un adelanto en Home.
+ * preview=false muestra la colección completa y la cinta.
  */
+
 import { Link } from "react-router-dom";
-import collectionImage from "/img/apparel-vol-001.png";
-import surveillanceImage from "/img/apparel-vigilancia-total.png";
-import midnightDesignsImage from "/img/apparel-ir-06-ir-07.png";
 import "../css/Platform.css";
 import { apparelDesigns } from "../data/apparel";
+import ApparelTicker from "./ApparelTicker";
 import "../css/ApparelDetail.css";
 
+// Imágenes locales almacenadas en la carpeta public/img.
+// Vite permite acceder a public directamente desde la raíz "/".
+const collectionImage = "/img/apparel-vol-001.png";
+const surveillanceImage = "/img/apparel-vigilancia-total.png";
+const midnightDesignsImage = "/img/apparel-ir-06-ir-07.png";
+
+// Componente principal de la colección
 const ApparelCollection = ({ preview = false }) => (
-    <section className="apparel-sector" id="apparel" aria-labelledby="apparel-title">
+  <section className="apparel-sector" id="apparel" aria-labelledby="apparel-title">
       <header className="apparel-heading">
         <div>
           <span className="signal-code">05 / apparel division</span>
-          <h2 id="apparel-title">Después de medianoche.</h2>
+          <h2 id="apparel-title">Drop : Después de medianoche.</h2>
           <p>{apparelDesigns.length} remeras. La misma interferencia.</p>
         </div>
-        <span className="collection-stamp">VOL. 001<br /><span>[independiente]</span></span>
+        <span className="collection-stamp">VOL. 001<br /></span>
       </header>
       <figure className="apparel-artwork">
         <img src={collectionImage} alt="Colección Insomnio Records: frente y dorso de El Ojo, Señal Nocturna, Fuera de Frecuencia y Después de Medianoche." loading="lazy" width="1536" height="1024" />
@@ -32,11 +39,11 @@ const ApparelCollection = ({ preview = false }) => (
         <img src={midnightDesignsImage} alt="IR-06, Transmisión de Largo Alcance, con antena y luna; e IR-07, 03:17, con reloj digital y escritorio nocturno. Frente y dorso de ambos diseños." loading="lazy" width="1536" height="1024" />
         <figcaption>[IR-06 — IR-07 / transmisión de largo alcance + 03:17 / frente + dorso]</figcaption>
       </figure>}
-      {!preview && <ol className="apparel-designs" aria-label="Diseños de la colección">
-        {apparelDesigns.map(({ code, name, description, slug }) => (
-          <li key={code}><span className="signal-code">{code}</span><h3>{name}</h3><p>{description}</p><Link to={`/apparel/${slug}`}>Ver diseño ↗</Link></li>
-        ))}
-      </ol>}
+
+      {/* Cinta animada de remeras, visible solo en el catálogo completo */}
+      {!preview && <ApparelTicker designs={apparelDesigns} />}
+
+      
       {preview && <Link className="btn-purple apparel-more" to="/apparel">Ver más / catálogo de remeras <span aria-hidden="true">↗</span></Link>}
       <p className="apparel-release-note">[presentación de colección / venta próximamente]</p>
     </section>
