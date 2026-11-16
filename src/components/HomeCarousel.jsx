@@ -6,11 +6,11 @@ import Carousel from "react-bootstrap/Carousel";
 import "../css/InsomnioIdentity.css";
 import "../css/HomeCarousel.css";
 
-import frusciante from "../img/jhon.png";
-import hendrix from "../img/jimmy.png";
-import cobain from "../img/kurt.png";
-import homme from "../img/homme.png";
-import yorke from "../img/yorke.png";
+import frusciante from "/img/jhon.png";
+import hendrix from "/img/jimmy.png";
+import cobain from "/img/kurt.png";
+import homme from "/img/homme.png";
+import yorke from "/img/yorke.png";
 
 function HomeCarousel() {
   return (

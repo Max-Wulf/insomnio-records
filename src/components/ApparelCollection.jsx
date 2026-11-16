@@ -3,9 +3,9 @@
  * Los enlaces se construyen con los slugs de apparelDesigns; no hay stock ni venta de remeras habilitados.
  */
 import { Link } from "react-router-dom";
-import collectionImage from "../img/apparel-vol-001.png";
-import surveillanceImage from "../img/apparel-vigilancia-total.png";
-import midnightDesignsImage from "../img/apparel-ir-06-ir-07.png";
+import collectionImage from "/img/apparel-vol-001.png";
+import surveillanceImage from "/img/apparel-vigilancia-total.png";
+import midnightDesignsImage from "/img/apparel-ir-06-ir-07.png";
 import "../css/Platform.css";
 import { apparelDesigns } from "../data/apparel";
 import "../css/ApparelDetail.css";

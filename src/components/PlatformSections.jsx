@@ -6,7 +6,7 @@ import TransmissionBanner from "./TransmissionBanner";
 import { Link } from "react-router-dom";
 import { transmissions } from "../data/transmissions";
 import ApparelCollection from "./ApparelCollection";
-import signalBanner from "../img/senal-nocturna-banner.png";
+import signalBanner from "/img/senal-nocturna-banner.png";
 
 const PlatformSections = () => (
   <>
