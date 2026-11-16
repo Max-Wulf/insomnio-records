@@ -2,8 +2,7 @@
 /**
  * IR / 8-BALL — Insomnio Records
  *
- * preview=true: adelanto en Home.
- * preview=false: selector de discos interactivo.
+ * Selector de discos interactivo al final de /productos.
  *
  * Estados:
  * idle    -> esperando al usuario.
@@ -16,7 +15,7 @@ import { Link } from "react-router-dom";
 import { useProducts } from "../hooks/useProducts";
 import "../css/IR8Ball.css";
 
-function IR8Ball({ preview = false }) {
+function IR8Ball() {
 
   // Reutilizamos el hook que consulta los discos de Firestore.
   const { products, loading, error } = useProducts();
@@ -65,7 +64,7 @@ function IR8Ball({ preview = false }) {
 
   return (
     <section
-      className={`ir8-section ${preview ? "ir8-section--preview" : ""}`}
+      className="ir8-section"
       aria-label="IR / 8-BALL"
     >
       <div className="ir8-container">
@@ -96,24 +95,6 @@ function IR8Ball({ preview = false }) {
             }`}
           >
 
-            {preview ? (
-              /* HOME: solamente muestra el adelanto */
-              <div className="ir8-intro">
-                <h2>Dejá que el azar elija.</h2>
-
-                <p>
-                  No sabés qué escuchar. Nosotros tampoco.
-                </p>
-
-                <Link
-                  className="ir8-button"
-                  to="/productos#ir-8-ball"
-                >
-                  VER MÁS / IR 8-BALL ↗
-                </Link>
-              </div>
-            ) : (
-              <>
                 {/* Estado inicial */}
                 {phase === "idle" && (
                   <div className="ir8-intro">
@@ -196,15 +177,11 @@ function IR8Ball({ preview = false }) {
                     </button>
                   </div>
                 )}
-              </>
-            )}
           </div>
         </div>
 
         <p className="ir8-status" aria-live="polite">
-          {preview
-            ? "[DESCUBRÍ TU PRÓXIMO DISCO]"
-            : phase === "rolling"
+          {phase === "rolling"
               ? "[CONSULTANDO FRECUENCIAS...]"
               : phase === "result"
                 ? "[EL AZAR HA HABLADO]"

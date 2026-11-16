@@ -261,26 +261,6 @@
   letter-spacing: 2px;
 }
 
-/* Home: versión más compacta */
-.ir8-section--preview {
-  padding: 50px 24px;
-}
-
-.ir8-section--preview .ir8-stage {
-  min-height: 210px;
-}
-
-.ir8-section--preview .ir8-ball {
-  width: 125px;
-  height: 125px;
-}
-
-.ir8-section--preview .ir8-ball-number {
-  width: 62px;
-  height: 62px;
-  font-size: 44px;
-}
-
 /* Adaptación para celulares */
 @media (max-width: 700px) {
   .ir8-section {
@@ -337,16 +317,7 @@
     font-size: 11px;
   }
 
-  .ir8-section--preview .ir8-ball {
-    width: 90px;
-    height: 90px;
-  }
 
-  .ir8-section--preview .ir8-ball-number {
-    width: 45px;
-    height: 45px;
-    font-size: 32px;
-  }
 }
 
 /* Accesibilidad */

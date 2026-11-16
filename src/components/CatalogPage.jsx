@@ -27,17 +27,17 @@ import "../css/CatalogPage.css";
 function CatalogPage() {
 
   const ballSection = useRef(null);
-  const { hash } = useLocation();
+  const { hash, pathname } = useLocation();
 
   // Esperamos al cat?logo para que su altura no desplace el destino del enlace.
   // Traemos los productos de Firestore.
   const { products, loading, error } = useProducts();
 
   useEffect(() => {
-    if (hash === "#ir-8-ball" && !loading) {
+    if (pathname === "/productos" && hash === "#ir-8-ball" && !loading) {
       ballSection.current?.scrollIntoView({ block: "start" });
     }
-  }, [hash, loading]);
+  }, [pathname, hash, loading]);
 
   // Lee la categoría desde la URL.
   // Ejemplo: /category/nacional -> "nacional"
@@ -143,9 +143,11 @@ function CatalogPage() {
       </section>
 
       {/* Selector aleatorio de discos */}
+      {pathname === "/productos" && (
         <section id="ir-8-ball" ref={ballSection}>
           <IR8Ball />
         </section>
+      )}
 
     </main>
   );

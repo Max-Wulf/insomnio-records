@@ -10,7 +10,6 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../service/firebase";
 import { Link } from "react-router-dom";
 import HomeCarousel from "./HomeCarousel";
-import IR8Ball from "./IR8Ball";
 import PlatformSections from "./PlatformSections";
 import ProductEditorialFooter from "./ProductEditorialFooter";
 import "../css/Platform.css";
@@ -83,9 +82,6 @@ const ItemListContainer = () => {
       </>
     )}
     </section>
-
-    {/* Adelanto del juego: el enlace abre la secci?n completa del cat?logo. */}
-    {!type && <IR8Ball preview />}
 
     <ProductEditorialFooter variant="music" />
 
