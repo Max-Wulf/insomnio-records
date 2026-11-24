@@ -5,7 +5,6 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
-  onAuthStateChanged,
   signOut,
   sendPasswordResetEmail,
 } from "firebase/auth";
