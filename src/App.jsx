@@ -25,7 +25,7 @@ import ApparelDetail from "./components/ApparelDetail";
 import IRSays from "./components/IRSays";
 import UserAccount from "./components/UserAccount";
 import Error from "./components/Error";
-
+import { AuthProvider } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
 
 import {
@@ -40,93 +40,95 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <BrowserRouter>
-      <CartProvider>
+      <AuthProvider>
+        <CartProvider>
 
-        {/* Navegación compartida */}
-        <NavbarRB />
+          {/* Navegación compartida */}
+          <NavbarRB />
 
-        <Routes>
+          <Routes>
 
-          {/* HOME: conserva el diseño actual */}
-          <Route
-            path="/"
-            element={<ItemListContainer />}
-          />
+            {/* HOME: conserva el diseño actual */}
+            <Route
+              path="/"
+              element={<ItemListContainer />}
+            />
 
-          {/* CATÁLOGO: todos los CDs */}
-          <Route
-            path="/productos"
-            element={<CatalogPage />}
-          />
+            {/* CATÁLOGO: todos los CDs */}
+            <Route
+              path="/productos"
+              element={<CatalogPage />}
+            />
 
-          {/* CATÁLOGO: filtrado por categoría */}
-          <Route
-            path="/category/:type"
-            element={<CatalogPage />}
-          />
-          {/* DETALLE DE UN DISCO */}
-          <Route
-            path="/item/:id"
-            element={<ItemDetailContainer />}
-          />
+            {/* CATÁLOGO: filtrado por categoría */}
+            <Route
+              path="/category/:type"
+              element={<CatalogPage />}
+            />
+            {/* DETALLE DE UN DISCO */}
+            <Route
+              path="/item/:id"
+              element={<ItemDetailContainer />}
+            />
 
-          {/* Buscador: ruta del buscador del navbar*/}
-          <Route 
-          path="/search" 
-          element={<SearchResults />} 
-          />
+            {/* Buscador: ruta del buscador del navbar*/}
+            <Route 
+            path="/search" 
+            element={<SearchResults />} 
+            />
 
-          {/* CARRITO Y COMPRA */}
-          <Route
-            path="/cart"
-            element={<CartContainer />}
-          />
+            {/* CARRITO Y COMPRA */}
+            <Route
+              path="/cart"
+              element={<CartContainer />}
+            />
 
-          <Route
-            path="/checkout"
-            element={<Checkout />}
-          />
+            <Route
+              path="/checkout"
+              element={<Checkout />}
+            />
 
-          <Route
-            path="/order-confirmation/:orderId"
-            element={<OrderConfirmation />}
-          />
+            <Route
+              path="/order-confirmation/:orderId"
+              element={<OrderConfirmation />}
+            />
 
-          {/* APPAREL */}
-          <Route
-            path="/apparel"
-            element={<ApparelCatalog />}
-          />
+            {/* APPAREL */}
+            <Route
+              path="/apparel"
+              element={<ApparelCatalog />}
+            />
 
-          <Route
-            path="/apparel/:slug"
-            element={<ApparelDetail />}
-          />
+            <Route
+              path="/apparel/:slug"
+              element={<ApparelDetail />}
+            />
 
-          {/* JUEGO */}
-          <Route
-            path="/ir-says"
-            element={<IRSays />}
-          />
+            {/* JUEGO */}
+            <Route
+              path="/ir-says"
+              element={<IRSays />}
+            />
 
-          {/* USUARIO */}
-          <Route
-            path="/mi-cuenta"
-            element={<UserAccount />}
-          />
+            {/* USUARIO */}
+            <Route
+              path="/mi-cuenta"
+              element={<UserAccount />}
+            />
 
-          {/* RUTA NO ENCONTRADA */}
-          <Route
-            path="*"
-            element={<Error />}
-          />
+            {/* RUTA NO ENCONTRADA */}
+            <Route
+              path="*"
+              element={<Error />}
+            />
 
-        </Routes>
+          </Routes>
 
-        {/* Pie de página compartido */}
-        <Footer />
+          {/* Pie de página compartido */}
+          <Footer />
 
-      </CartProvider>
+        </CartProvider>
+      </AuthProvider>  
     </BrowserRouter>
   );
 }

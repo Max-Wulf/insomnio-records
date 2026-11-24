@@ -1,203 +1,312 @@
 /**
- * CONTEXTO: Página /checkout: valida datos con react-hook-form y registra la compra mediante una transacción.
- * Solo tras el éxito guarda el comprobante, navega a confirmación y vacía el carrito.
- * Atención: lee stock de products, mientras el catálogo lee items; revisar colecciones e IDs al trabajar la lógica.
- * El total proviene del carrito del navegador: aún falta validarlo contra una fuente confiable del servidor.
+ * CONTEXTO: Página /checkout de Insomnio Records.
+ *
+ * - Requiere autenticación.
+ * - Asocia cada pedido al UID del usuario.
+ * - Valida los datos mediante react-hook-form.
+ * - Controla el stock mediante una transacción atómica.
+ * - Evita envíos duplicados.
+ * - Genera un comprobante tras confirmar la compra.
+ *
+ * PENDIENTE: validar precios y totales desde un backend
+ * confiable antes de implementar ventas reales.
  */
+
 import { useState, useContext, useRef } from "react";
+
 import { CartContext } from "../context/CartContext";
-import { collection,doc,runTransaction,serverTimestamp,} from "firebase/firestore";
-import { db } from "../service/firebase";
-import { useNavigate } from "react-router-dom";
-import { createReceipt, completeOrder } from "../service/orderReceipt";
+import { useAuth } from "../context/AuthContext";
+
+import {
+  collection,
+  doc,
+  runTransaction,
+  serverTimestamp,
+} from "firebase/firestore";
+
+import { db, auth } from "../service/firebase";
+
+import { useNavigate, Link } from "react-router-dom";
+
+import {
+  createReceipt,
+  completeOrder,
+} from "../service/orderReceipt";
+
 import EmptyCart from "./EmptyCart";
 import { useForm } from "react-hook-form";
+
 import "../css/Checkout.css";
 
 const Checkout = () => {
   const navigate = useNavigate();
-  // El ref bloquea envíos duplicados inmediatamente; loading refleja ese estado en el botón.
+
   const submitting = useRef(false);
   const [loading, setLoading] = useState(false);
 
+  // Contexto del carrito
   const { cart, total, clear } = useContext(CartContext);
+
+  // Contexto de autenticación
+  const {
+    user,
+    loading: authLoading,
+  } = useAuth();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
   } = useForm();
 
-  // Recibe los campos validados. Comprueba stock y escribe orden/descuentos de forma atómica.
-  // Si falla, conserva el carrito y libera el bloqueo para permitir reintentar.
+  // Finalizar compra
   const terminarCompra = async (data) => {
     if (submitting.current || cart.length === 0) return;
-    submitting.current = true;
 
+    // Comprobamos que exista una sesión activa
+    if (!user || auth.currentUser?.uid !== user.uid) {
+      navigate("/mi-cuenta");
+      return;
+    }
+
+    submitting.current = true;
     setLoading(true);
 
     try {
-      const { name, lastname, address, email } = data;
+      const { name, lastname, address } = data;
+
+      // Identidad del usuario autenticado
+      const userId = user.uid;
+      const email = user.email;
 
       const orderColl = collection(db, "orders");
       const orderRef = doc(orderColl);
 
+      // Referencias a los productos de Firestore
       const productos = cart.map((item) => ({
         ref: doc(db, "items", String(item.id)),
         quantity: item.quantity,
         id: item.id,
       }));
 
-      const pendingReceipt = createReceipt(orderRef.id, cart, total());
+      // Preparamos el comprobante
+      const pendingReceipt = createReceipt(
+        orderRef.id,
+        cart,
+        total()
+      );
+
       const receipt = await completeOrder({
         receipt: pendingReceipt,
-        // Firestore puede reintentar este callback: sus efectos deben limitarse a la transacción.
-        commit: () => runTransaction(db, async (transaction) => {
-          // Primero leemos todos los productos.
-          const snapshots = [];
 
-          for (const producto of productos) {
-            const snapshot = await transaction.get(producto.ref);
+        commit: () =>
+          runTransaction(db, async (transaction) => {
+            const snapshots = [];
 
-            if (!snapshot.exists()) {
-              throw new Error(`El producto ${producto.id} no existe.`);
-            }
-
-            const stock = snapshot.data().stock;
-
-            if (
-              !Number.isInteger(producto.quantity) ||
-              producto.quantity <= 0 ||
-              !Number.isInteger(stock) ||
-              stock < producto.quantity
-            ) {
-              throw new Error(
-                `Stock insuficiente para el producto ${producto.id}.`
+            // Primero realizamos todas las lecturas
+            for (const producto of productos) {
+              const snapshot = await transaction.get(
+                producto.ref
               );
+
+              if (!snapshot.exists()) {
+                throw new Error(
+                  `El producto ${producto.id} no existe.`
+                );
+              }
+
+              const stock = snapshot.data().stock;
+
+              if (
+                !Number.isInteger(producto.quantity) ||
+                producto.quantity <= 0 ||
+                !Number.isInteger(stock) ||
+                stock < producto.quantity
+              ) {
+                throw new Error(
+                  `Stock insuficiente para el producto ${producto.id}.`
+                );
+              }
+
+              snapshots.push(snapshot);
             }
 
-            snapshots.push(snapshot);
-          }
+            // Actualizamos el stock
+            productos.forEach((producto, index) => {
+              const stockActual =
+                snapshots[index].data().stock;
 
-          // Después de todas las lecturas, actualizamos el stock.
-          productos.forEach((producto, index) => {
-            const stockActual = snapshots[index].data().stock;
-
-            transaction.update(producto.ref, {
-              stock: stockActual - producto.quantity,
+              transaction.update(producto.ref, {
+                stock: stockActual - producto.quantity,
+              });
             });
-          });
 
-          // Creamos la orden dentro de la misma transacción.
-          transaction.set(orderRef, {
-            comprador: { name, lastname, address, email },
-            carrito: cart,
-            total: pendingReceipt.total,
-            fecha: serverTimestamp(),
-          });
-        }),
+            // Creamos la orden asociada al usuario
+            transaction.set(orderRef, {
+              userId,
+
+              comprador: {
+                name,
+                lastname,
+                address,
+                email,
+              },
+
+              carrito: cart,
+              total: pendingReceipt.total,
+              fecha: serverTimestamp(),
+            });
+          }),
       });
 
-      // Se llega aquí únicamente después de confirmar la escritura remota y preparar el resumen.
-      navigate(`/order-confirmation/${orderRef.id}`, { state: { receipt }, replace: true });
+      // Navegamos únicamente después de confirmar la compra
+      navigate(
+        `/order-confirmation/${orderRef.id}`,
+        {
+          state: { receipt },
+          replace: true,
+        }
+      );
+
       clear();
     } catch (error) {
-      console.error("Error al finalizar la compra:", error);
-      alert(error.message || "No se pudo completar la compra.");
+      console.error(
+        "Error al finalizar la compra:",
+        error
+      );
+
+      alert(
+        error.message ||
+          "No se pudo completar la compra."
+      );
     } finally {
       submitting.current = false;
       setLoading(false);
     }
   };
 
+  // Esperamos a que Firebase compruebe la sesión
+  if (authLoading) {
+    return (
+      <main className="checkout-page">
+        <div className="checkout-container">
+          <p>Verificando sesión...</p>
+        </div>
+      </main>
+    );
+  }
+
+  // Carrito vacío
   if (!cart.length) {
     return <EmptyCart />;
   }
 
-  return (
-    <main className="checkout-page">
-        <div className="checkout-container">
-          <h1>Finalizar compra</h1>
+  // Usuario no autenticado
+  if (!user) {
+    return (
+      <main className="checkout-page">
+        <div className="checkout-container checkout-auth">
+          <span>[ACCESO REQUERIDO]</span>
 
-          <p className="checkout-subtitle">
-            Completá tus datos para generar la orden.
+          <h1>Iniciá sesión</h1>
+
+          <p>
+            Para finalizar tu compra necesitás una cuenta
+            en Insomnio Records.
           </p>
 
-          <form
-            className="checkout-form"
-            onSubmit={(event) => handleSubmit(terminarCompra)(event)}
+          <Link
+            to="/mi-cuenta"
+            className="checkout-btn"
           >
-            <input
-              type="text"
-              placeholder="Nombre"
-              {...register("name", { required: true, minLength: 3 })}
-            />
-            {errors?.name && (
-              <small>Complete este campo.</small>
-            )}
+            Iniciar sesión / Registrarme
+          </Link>
 
-            <input
-              type="text"
-              placeholder="Apellido"
-              {...register("lastname", { required: true, minLength: 2 })}
-            />
-            {errors?.lastname && (
-              <small>Complete este campo.</small>
-            )}
-
-            <input
-              type="text"
-              placeholder="Dirección"
-              {...register("address", {
-                required: true,
-                minLength: 10,
-                maxLength: 35,
-              })}
-            />
-            {errors?.address && (
-              <small>Complete este campo.</small>
-            )}
-
-            <input
-              type="email"
-              placeholder="Correo electrónico"
-              {...register("email", { required: true })}
-            />
-            {errors?.email && (
-              <small>Complete este campo.</small>
-            )}
-
-            <input
-              type="email"
-              placeholder="Repetí tu correo"
-              {...register("secondemail", {
-                required: true,
-                validate: {
-                  equalsMails: (mail2) =>
-                    mail2 === getValues().email,
-                },
-              })}
-            />
-
-            {errors?.secondemail?.type === "required" && (
-              <small>Complete este campo.</small>
-            )}
-
-            {errors?.secondemail?.type === "equalsMails" && (
-              <small>Los correos no coinciden.</small>
-            )}
-
-            <button
-              className="checkout-btn"
-              disabled={loading}
-            >
-              {loading
-                ? "Procesando compra..."
-                : "Finalizar compra"}
-            </button>
-          </form>
+          <Link
+            to="/cart"
+            className="checkout-back"
+          >
+            Volver al carrito
+          </Link>
         </div>
+      </main>
+    );
+  }
+
+  // Formulario de compra
+  return (
+    <main className="checkout-page">
+      <div className="checkout-container">
+        <h1>Finalizar compra</h1>
+
+        <p className="checkout-subtitle">
+          Completá tus datos para generar la orden.
+        </p>
+
+        {/* Cuenta asociada a la compra */}
+        <div className="checkout-user">
+          <span>COMPRANDO COMO</span>
+          <strong>{user.email}</strong>
+        </div>
+
+        <form
+          className="checkout-form"
+          onSubmit={handleSubmit(terminarCompra)}
+        >
+          <input
+            type="text"
+            placeholder="Nombre"
+            autoComplete="given-name"
+            {...register("name", {
+              required: true,
+              minLength: 3,
+            })}
+          />
+
+          {errors?.name && (
+            <small>Ingresá un nombre válido.</small>
+          )}
+
+          <input
+            type="text"
+            placeholder="Apellido"
+            autoComplete="family-name"
+            {...register("lastname", {
+              required: true,
+              minLength: 2,
+            })}
+          />
+
+          {errors?.lastname && (
+            <small>Ingresá un apellido válido.</small>
+          )}
+
+          <input
+            type="text"
+            placeholder="Dirección"
+            autoComplete="street-address"
+            {...register("address", {
+              required: true,
+              minLength: 10,
+              maxLength: 35,
+            })}
+          />
+
+          {errors?.address && (
+            <small>Ingresá una dirección válida.</small>
+          )}
+
+          <button
+            type="submit"
+            className="checkout-btn"
+            disabled={loading}
+          >
+            {loading
+              ? "Procesando compra..."
+              : "Finalizar compra"}
+          </button>
+        </form>
+      </div>
     </main>
   );
 };

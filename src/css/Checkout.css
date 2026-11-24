@@ -146,3 +146,65 @@
     background:#893adf;
     color:white;
 }
+/* Cuenta asociada al pedido */
+
+.checkout-user {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  margin-bottom: 25px;
+  background-color: #111;
+  border: 1px solid #333;
+  overflow-wrap: anywhere;
+}
+
+.checkout-user span {
+  font-family: monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #888;
+}
+
+.checkout-user strong {
+  font-size: 14px;
+  color: #f2f2f2;
+}
+
+/* Autenticación requerida */
+
+.checkout-auth {
+  text-align: center;
+}
+
+.checkout-auth > span {
+  font-family: monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #888;
+}
+
+.checkout-auth p {
+  margin: 20px 0 30px;
+  color: #aaa;
+  line-height: 1.6;
+}
+
+.checkout-auth .checkout-btn {
+  display: block;
+  text-decoration: none;
+  text-align: center;
+}
+
+.checkout-back {
+  display: block;
+  margin-top: 20px;
+  color: #888;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.checkout-back:hover {
+  color: #fff;
+  text-decoration: underline;
+}
