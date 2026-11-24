@@ -12,6 +12,7 @@ import NavbarRB from "./components/Navbar";
 
 import ItemListContainer from "./components/ItemListContainer";
 import CatalogPage from "./components/CatalogPage";
+import SearchResults from "./components/SearchResults"
 
 import ItemDetailContainer from "./components/ItemDetailContainer";
 import CartContainer from "./components/CartContainer";
@@ -67,6 +68,12 @@ function App() {
           <Route
             path="/item/:id"
             element={<ItemDetailContainer />}
+          />
+
+          {/* Buscador: ruta del buscador del navbar*/}
+          <Route 
+          path="/search" 
+          element={<SearchResults />} 
           />
 
           {/* CARRITO Y COMPRA */}
