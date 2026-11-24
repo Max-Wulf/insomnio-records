@@ -25,7 +25,6 @@ import ApparelDetail from "./components/ApparelDetail";
 import IRSays from "./components/IRSays";
 import UserAccount from "./components/UserAccount";
 import Error from "./components/Error";
-import { AuthProvider } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
 
 import {
@@ -40,7 +39,6 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
         <CartProvider>
 
           {/* Navegación compartida */}
@@ -128,7 +126,6 @@ function App() {
           <Footer />
 
         </CartProvider>
-      </AuthProvider>  
     </BrowserRouter>
   );
 }

@@ -27,16 +27,6 @@ const UserAccount = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [success, setSuccess] = useState("");
 
-  // Detectamos si existe una sesión activa
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-    });
-
-    return unsubscribe;
-  }, []);
-
   // Limpiar los campos de contraseña
   const clearPasswords = () => {
     setPassword("");
