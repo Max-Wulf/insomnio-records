@@ -11,6 +11,7 @@ import {
 
 import { auth } from "../service/firebase";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
+import OrderHistory from "./OrderHistory";
 import "../css/UserAccount.css";
 
 const UserAccount = () => {
@@ -375,6 +376,7 @@ const UserAccount = () => {
           {success}
         </p>
       )}
+      {user && <OrderHistory key={user.uid} />}
     </main>
   );
 };
