@@ -72,4 +72,49 @@ test.describe("Home - insomnio Records", ()=>{
         const resultados = page.getByRole('heading', {name: 'Resultados para "Queens of the Stone Age"',exact: true});
         await expect(resultados).toBeVisible({ timeout: 10000 });
     });
+
+    test('El carrito se abre desde el costado derecho', async ({ page }) => {
+        const botonCarrito = page.getByRole('button', { name: 'Abrir carrito' });
+        const panelCarrito = page.locator('.cart-drawer');
+
+        await expect(botonCarrito).toBeVisible();
+        await expect(panelCarrito).not.toBeInViewport();
+
+        await botonCarrito.click();
+
+        await expect(panelCarrito).toBeInViewport();
+        await expect(panelCarrito).toHaveCSS('right', '0px');
+    });
+
+    test ('El boton de usuario esta visible', async ({page})=>{
+        const botonCuenta =page.getByRole('link',{ name: 'Mi cuenta', exact: true});
+        await expect(botonCuenta).toBeVisible();
+        await botonCuenta.click();
+        await expect(page).toHaveURL('https://insomnio-records.vercel.app/mi-cuenta');
+        const encabezado =page.getByRole('heading', { name: 'Mi cuenta', level: 1, exact: true });
+        await expect(encabezado).toBeVisible();
+
+    });
+
+    test('Se muestra el catálogo de discos en el Home', async ({ page }) => {
+        const catalogo = page.getByRole('region', { name: 'Catálogo de discos',exact: true,});
+        await expect(catalogo).toBeVisible();
+        await expect(catalogo.getByRole('heading', { name: 'Discos para seguir despierto.' }),).toBeVisible();
+        await expect(catalogo.locator('.product-card').first()).toBeVisible();
+        const enlaceCatalogo = catalogo.getByRole('link', {name: /ver todos los discos/i,});
+        
+    });
+
+    test('Verificar consistencia del fondo editorial en ambos temas', async ({ page }) => {
+
+        const cartel = page.locator('.product-editorial-footer--music');
+
+        await expect(cartel).toBeVisible();
+
+        await page.emulateMedia({ colorScheme: 'light' });
+        await expect(cartel).toHaveCSS('background-color', 'rgb(3, 3, 3)');
+
+        await page.emulateMedia({ colorScheme: 'dark' });
+        await expect(cartel).toHaveCSS('background-color', 'rgb(3, 3, 3)');
+    });
 })

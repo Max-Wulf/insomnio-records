@@ -1,4 +1,4 @@
-/* Shared editorial theme follows the browser preference without inverting artwork. */
+/* Shared editorial palette stays dark across browser theme preferences. */
 .transmission-banner-link {
   display: block;
   margin: 40px 0;
@@ -27,18 +27,8 @@ body .transmission-banner-link:focus-visible { outline-color: var(--broadcast-ac
   --broadcast-accent: #c7b2eb;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --broadcast-bg: #f5f5f5;
-    --broadcast-fg: #080808;
-    --broadcast-muted: #505050;
-    --broadcast-line: #ccc;
-    --broadcast-accent: #60377e;
-  }
-}
-
 body #root :is(.transmission-banner, .product-editorial-footer, .transmission-footer) {
-  color-scheme: light dark;
+  color-scheme: only dark;
   background: var(--broadcast-bg);
   color: var(--broadcast-fg);
   border-color: var(--broadcast-line);
